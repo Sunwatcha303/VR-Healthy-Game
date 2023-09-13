@@ -20,8 +20,6 @@ public class AttributeBall : MonoBehaviour
         }
     }
 
-
-
     void Update()
     {
         transform.Rotate(speed * Time.deltaTime / 10, speed * Time.deltaTime * 2, speed * Time.deltaTime);
