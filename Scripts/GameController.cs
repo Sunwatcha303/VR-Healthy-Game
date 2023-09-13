@@ -18,9 +18,13 @@ public class GameController : MonoBehaviour
     void Start()
     {
         // startScene.SetActive(true);
+
         playScene.SetActive(false);
         PlayerPrefs.SetFloat("nextClick", Time.time);
         Time.timeScale = 0;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     // Update is called once per frame
@@ -78,7 +82,8 @@ public class GameController : MonoBehaviour
             timer = time + Time.time;
         }
         isStart = true;
-        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     public void getScore()
     {
