@@ -8,35 +8,59 @@ public class SpawnBall : MonoBehaviour
     Vector3 previousSpawnPosition;
     public bool ready = true;
     float spawnTime = 0.0f;
+    public float near = 0.5f;
+    public float normal = 1f;
+    public float far = 1.5f;
+    float posZ;
+    public GameObject[] table;
+    Queue<SelectBallLocation> q;
 
     // Update is called once per frame
+    void Start(){
+        posZ = near;
+    }
     void Update()
     {
         if (ready && (Time.time > spawnTime))
         {
-
-            GameObject temp;
-            temp = (GameObject)Instantiate(objToSpawn);
-            Vector3 spawnPosition = GenerateSpawnPosition();
-            temp.transform.position = spawnPosition;
-            previousSpawnPosition = spawnPosition;
-
+            foreach(SelectBallLocation selection in q){
+                GameObject temp;
+                temp = (GameObject)Instantiate(objToSpawn);
+                Vector3 spawnPosition = new Vector3(selection.getX(), selection.getY(),posZ);
+                temp.transform.position = spawnPosition;
+                previousSpawnPosition = spawnPosition;
+            }
+            // SelectBallLocation selection = q.Dequeue();
             ready = false;
         }
-    }
-    private Vector3 GenerateSpawnPosition()
-    {
-        Vector3 spawnPosition;
-        do
-        {
-            spawnPosition = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(1.5f, 2.5f), Random.Range(0.5f, 0.5f));
-        } while (Vector3.Distance(spawnPosition, previousSpawnPosition) < 0.1f);
-
-        return spawnPosition;
     }
     public void setReady()
     {
         ready = true;
         spawnTime = Time.time + 0.5f;
+    }
+
+    public void setQueueBall(){
+        q = new Queue<SelectBallLocation>();
+        for(int i=0;i<table.Length;i++){
+            SelectBallLocation selection = table[i].GetComponent<SelectBallLocation>();
+            if (selection.getSelect()){
+                q.Enqueue(selection);
+            }
+        }
+    }
+
+    public void setPosZ(string str){
+        switch(str){
+            case "near":
+                posZ = near;
+                break;
+            case "normal":
+                posZ = normal;
+                break;
+            case "far":
+                posZ = far;
+                break;
+        }
     }
 }

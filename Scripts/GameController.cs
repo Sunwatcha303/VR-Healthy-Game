@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 
 {
-
     public bool isStart = false;
     public bool isFinish = false;
     public int score = 0;
@@ -18,10 +17,10 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startScene.SetActive(true);
+        // startScene.SetActive(true);
         playScene.SetActive(false);
         PlayerPrefs.SetFloat("nextClick", Time.time);
-
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -29,12 +28,12 @@ public class GameController : MonoBehaviour
     {
         if (isStart)
         {
-            startScene.SetActive(false);
+            // startScene.SetActive(false);
             playScene.SetActive(true);
         }
         else
         {
-            startScene.SetActive(true);
+            // startScene.SetActive(true);
             playScene.SetActive(false);
         }
         scoreLB.text = "Score : " + score;
@@ -48,7 +47,6 @@ public class GameController : MonoBehaviour
         if (isFinish)
         {
             StartCoroutine(ReSetLevel());
-            
         }
         
     }
@@ -74,6 +72,7 @@ public class GameController : MonoBehaviour
     }
     public void getTriggerStart()
     {
+        Time.timeScale = 1;
         if (!isStart)
         {
             timer = time + Time.time;
