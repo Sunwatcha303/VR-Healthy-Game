@@ -33,7 +33,6 @@ public class AttributeBall : MonoBehaviour
         {
             Destroy(this.gameObject);
             gameController.getScore();
-            spawner.setReady();
         }
     }
 }
