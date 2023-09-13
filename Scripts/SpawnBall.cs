@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class SpawnBall : MonoBehaviour
 {
-    public GameObject objToSpawn;
-    Vector3 previousSpawnPosition;
+    public GameObject BallForLeft;
+    public GameObject BallForRight;
     public bool ready = true;
+    public bool isQSystem = false;
     float spawnTime = 0.0f;
     public float near = 0.5f;
     public float normal = 1f;
@@ -14,6 +15,7 @@ public class SpawnBall : MonoBehaviour
     float posZ;
     public GameObject[] table;
     Queue<SelectBallLocation> q;
+    System.Random random = new System.Random();
 
     // Update is called once per frame
     void Start(){
@@ -23,14 +25,31 @@ public class SpawnBall : MonoBehaviour
     {
         if (ready && (Time.time > spawnTime))
         {
-            foreach(SelectBallLocation selection in q){
+            if(isQSystem){
                 GameObject temp;
-                temp = (GameObject)Instantiate(objToSpawn);
+                SelectBallLocation selection = q.Dequeue();
+                if(random.Next(0, 2) == 1){
+                    temp = (GameObject)Instantiate(BallForLeft);
+                }
+                else{
+                    temp = (GameObject)Instantiate(BallForRight);
+                }
                 Vector3 spawnPosition = new Vector3(selection.getX(), selection.getY(),posZ);
                 temp.transform.position = spawnPosition;
-                previousSpawnPosition = spawnPosition;
             }
-            // SelectBallLocation selection = q.Dequeue();
+            else{
+                foreach(SelectBallLocation selection in q){
+                    GameObject temp;
+                    if(random.Next(0, 2) == 1){
+                        temp = (GameObject)Instantiate(BallForLeft);
+                    }
+                    else{
+                        temp = (GameObject)Instantiate(BallForRight);
+                    }
+                    Vector3 spawnPosition = new Vector3(selection.getX(), selection.getY(),posZ);
+                    temp.transform.position = spawnPosition;
+                }
+            }
             ready = false;
         }
     }
@@ -61,6 +80,19 @@ public class SpawnBall : MonoBehaviour
             case "far":
                 posZ = far;
                 break;
+        }
+    }
+
+    public bool getQSystem(){
+        return isQSystem;
+    }
+
+    public void setQSystem(){
+        if(isQSystem){
+            isQSystem = false;
+        }
+        else{
+            isQSystem = true;
         }
     }
 }
