@@ -15,6 +15,7 @@ public class SpawnBall : MonoBehaviour
     float posZ;
     public GameObject[] table;
     Queue<SelectBallLocation> q;
+    List<GameObject> listBallInstance = new List<GameObject>();
     System.Random random = new System.Random();
 
     // Update is called once per frame
@@ -30,9 +31,11 @@ public class SpawnBall : MonoBehaviour
                 SelectBallLocation selection = q.Dequeue();
                 if(random.Next(0, 2) == 1){
                     temp = (GameObject)Instantiate(BallForLeft);
+                    listBallInstance.Add(temp);
                 }
                 else{
                     temp = (GameObject)Instantiate(BallForRight);
+                    listBallInstance.Add(temp);
                 }
                 Vector3 spawnPosition = new Vector3(selection.getX(), selection.getY(),posZ);
                 temp.transform.position = spawnPosition;
@@ -42,9 +45,11 @@ public class SpawnBall : MonoBehaviour
                     GameObject temp;
                     if(random.Next(0, 2) == 1){
                         temp = (GameObject)Instantiate(BallForLeft);
+                        listBallInstance.Add(temp);
                     }
                     else{
                         temp = (GameObject)Instantiate(BallForRight);
+                        listBallInstance.Add(temp);
                     }
                     Vector3 spawnPosition = new Vector3(selection.getX(), selection.getY(),posZ);
                     temp.transform.position = spawnPosition;
@@ -94,5 +99,12 @@ public class SpawnBall : MonoBehaviour
         else{
             isQSystem = true;
         }
+    }
+
+    public void DestroyBall(){
+        foreach(GameObject ball in listBallInstance){
+            Destroy(ball);
+        }
+        listBallInstance.Clear();
     }
 }

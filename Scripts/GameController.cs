@@ -50,7 +50,8 @@ public class GameController : MonoBehaviour
 
         if (isFinish)
         {
-            StartCoroutine(ReSetLevel());
+            Time.timeScale = 0;
+            // StartCoroutine(ReSetLevel());
         }
         
     }
@@ -82,11 +83,23 @@ public class GameController : MonoBehaviour
             timer = time + Time.time;
         }
         isStart = true;
+        isFinish = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
     public void getScore()
     {
         score += 1;
+    }
+
+    public void setFinish(){
+        isFinish = true;
+        isStart = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public bool getStart(){
+        return isStart;
     }
 }
