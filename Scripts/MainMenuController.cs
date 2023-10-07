@@ -6,29 +6,31 @@ public class MainMenuController : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject mainMenu;
-    public GameObject twoHandMenu;
+    public GameObject selectBallMenu;
     public GameObject mainCamera;
     public GameController controller;
     public SpawnBall spawnBall;
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (controller.getStart() && Input.GetKeyDown(KeyCode.P)){
-            Debug.Log("test");
+        if (controller.getStart() && Input.GetKeyDown(KeyCode.P))
+        {
+            // Debug.Log("test");
             spawnBall.DestroyBall();
             controller.setFinish();
             mainMenu.SetActive(true);
-            twoHandMenu.SetActive(true);
+            selectBallMenu.SetActive(true);
             mainCamera.SetActive(false);
         }
     }
 
-    public void Exit(){
+    public void Exit()
+    {
         Application.Quit();
     }
 }
