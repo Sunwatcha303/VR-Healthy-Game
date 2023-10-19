@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     public GameObject mainCamera;
     public GameObject mainMenu, endGameMenu;
     public GameObject playScene;
+    public GameObject setTimer;
     public TextMesh scoreLB, timeLB;
     public TextMeshProUGUI totalScore;
     float timer;
@@ -47,7 +48,10 @@ public class GameController : MonoBehaviour
 
         Time.timeScale = 1;
 
-        timer = time + Time.time;
+        string input = setTimer.GetComponent<TMP_InputField>().text;
+        Debug.Log(input);
+        int t = int.Parse(input);
+        timer = t + Time.time;
 
         playScene.SetActive(true);
 
