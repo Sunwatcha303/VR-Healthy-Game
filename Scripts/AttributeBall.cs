@@ -30,7 +30,7 @@ public class AttributeBall : MonoBehaviour
         if (obj.gameObject.tag.Equals("Hand"))
         {
             Destroy(this.gameObject);
-            gameController.getScore();
+            gameController.setScore();
         }
     }
 }

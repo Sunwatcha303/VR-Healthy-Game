@@ -134,6 +134,9 @@ public class SpawnBall : MonoBehaviour
     {
         ready = true;
         spawnTime = Time.time + 0.5f;
+        Debug.Log(isRightHand);
+        Debug.Log(isLeftHand);
+        Debug.Log(isOneHand);
     }
 
     public void setQueueBall()
@@ -195,7 +198,6 @@ public class SpawnBall : MonoBehaviour
         }
         listBallInstance.Clear();
     }
-
     public void setIsOneHand(bool b)
     {
         isOneHand = b;
@@ -203,10 +205,14 @@ public class SpawnBall : MonoBehaviour
     public void setIsLeftHand(bool b)
     {
         isLeftHand = b;
+        Debug.Log(isLeftHand);
+        isOneHand = (isLeftHand && isRightHand) ? false : true;
     }
     public void setIsRightHand(bool b)
     {
         isRightHand = b;
+        Debug.Log(isRightHand);
+        isOneHand = (isLeftHand && isRightHand) ? false : true;
     }
     public void resetForBackButton()
     {
