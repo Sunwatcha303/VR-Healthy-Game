@@ -10,7 +10,6 @@ public class GameController : MonoBehaviour
 {
     bool isStart = false;
     public int score = 0;
-    public int time = 60;
     public GameObject mainCamera;
     public GameObject mainMenu, endGameMenu;
     public GameObject playScene;
@@ -18,6 +17,7 @@ public class GameController : MonoBehaviour
     public TextMesh scoreLB, timeLB;
     public TextMeshProUGUI totalScore;
     float timer;
+    float time;
     public SpawnBall spawnBall;
     // Start is called before the first frame update
     void Start()
@@ -25,6 +25,10 @@ public class GameController : MonoBehaviour
         playScene.SetActive(false);
         PlayerPrefs.SetFloat("nextClick", Time.time);
         Time.timeScale = 0;
+
+        string input = setTimer.GetComponent<TMP_InputField>().text;
+        int t = (input == "") ? 0 : int.Parse(input);
+        time = t;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -49,9 +53,9 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1;
 
         string input = setTimer.GetComponent<TMP_InputField>().text;
-        Debug.Log(input);
-        int t = int.Parse(input);
-        timer = t + Time.time;
+        int t = (input == "") ? 0 : int.Parse(input);
+        time = t;
+        timer = time + Time.time;
 
         playScene.SetActive(true);
 
@@ -74,6 +78,8 @@ public class GameController : MonoBehaviour
         totalScore.text = "Total Score: " + score;
         spawnBall.DestroyBall();
 
+        GetComponent<Logging>().SaveToLog(score, time, spawnBall.getSizeListBall(), GetComponent<ModeToPlay>().leftFlag, GetComponent<ModeToPlay>().rightFlag, spawnBall.getDistance());
+
         score = 0;
 
         Cursor.lockState = CursorLockMode.None;
@@ -95,5 +101,15 @@ public class GameController : MonoBehaviour
     public bool getStart()
     {
         return isStart;
+    }
+
+    public float getTimer()
+    {
+        return time;
+    }
+
+    public int getScore()
+    {
+        return score;
     }
 }

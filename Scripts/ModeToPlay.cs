@@ -10,8 +10,8 @@ public class ModeToPlay : MonoBehaviour
     public GameObject rightToggle;
     public GameObject leftHand;
     public GameObject rightHand;
-    bool leftFlag;
-    bool rightFlag;
+    public bool leftFlag;
+    public bool rightFlag;
     bool openTwoHand;
     public SpawnBall spawn;
     void Start()
@@ -44,6 +44,7 @@ public class ModeToPlay : MonoBehaviour
             spawn.setIsLeftHand(true);
 
         }
+        checkFlag();
     }
     public void setFlagRightHand()
     {
@@ -58,6 +59,18 @@ public class ModeToPlay : MonoBehaviour
             rightHand.SetActive(true);
             rightFlag = true;
             spawn.setIsRightHand(true);
+        }
+        checkFlag();
+    }
+
+    void checkFlag()
+    {
+        if (!rightFlag && !leftFlag)
+        {
+            setFlagLeftHand();
+            setFlagRightHand();
+            leftToggle.GetComponent<Toggle>().isOn = true;
+            rightToggle.GetComponent<Toggle>().isOn = true;
         }
     }
 }

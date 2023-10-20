@@ -19,6 +19,7 @@ public class SpawnBall : MonoBehaviour
     Queue<SelectBallLocation> q;
     List<GameObject> listBallInstance = new List<GameObject>();
     System.Random random = new System.Random();
+    int count = 0;
 
     bool isLeftHand = false;
     bool isRightHand = false;
@@ -192,6 +193,7 @@ public class SpawnBall : MonoBehaviour
 
     public void DestroyBall()
     {
+        count = listBallInstance.Count;
         foreach (GameObject ball in listBallInstance)
         {
             Destroy(ball);
@@ -219,5 +221,17 @@ public class SpawnBall : MonoBehaviour
         setIsOneHand(false);
         setIsLeftHand(false);
         setIsRightHand(false);
+    }
+
+    public int getSizeListBall()
+    {
+        return count;
+    }
+
+    public string getDistance()
+    {
+        if (isNear) return "near";
+        else if (isNormal) return "normal";
+        else return "far";
     }
 }
