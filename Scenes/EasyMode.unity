@@ -9324,6 +9324,7 @@ GameObject:
   - component: {fileID: 1775945829}
   - component: {fileID: 1775945830}
   - component: {fileID: 1775945831}
+  - component: {fileID: 1775945832}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -9359,7 +9360,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
-  time: 120
   mainCamera: {fileID: 1324878929}
   mainMenu: {fileID: 1250163591}
   endGameMenu: {fileID: 824409095}
@@ -9403,6 +9403,18 @@ MonoBehaviour:
   leftHand: {fileID: 1627641142}
   rightHand: {fileID: 1627641141}
   spawn: {fileID: 1163271901}
+--- !u!114 &1775945832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775945827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 432558a3d05d96a458db4b0bd479f11c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1779371764
 GameObject:
   m_ObjectHideFlags: 0
