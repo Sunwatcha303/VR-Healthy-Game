@@ -26,9 +26,16 @@ public class LineLine : MonoBehaviour
     {
         if (gameController.getStart() && Input.GetMouseButtonDown(0))
         {
-            isDrawing = true;
-            lineRenderer.positionCount = 0;
-            startPos = getMousePosition();
+            if (getMousePosition().HasValue)
+            {
+                isDrawing = true;
+                lineRenderer.positionCount = 0;
+                startPos = getMousePosition().Value;
+            }
+            else
+            {
+
+            }
         }
         if (gameController.getStart() && Input.GetMouseButtonUp(0))
         {
@@ -36,30 +43,38 @@ public class LineLine : MonoBehaviour
         }
         if (isDrawing)
         {
-            Vector3 curPos = getMousePosition();
-            if (Vector3.Distance(curPos, prePos) > minDistance)
+            if (getMousePosition().HasValue)
             {
-                lineRenderer.positionCount++;
-                lineRenderer.SetPosition(lineRenderer.positionCount - 1, curPos);
-                prePos = curPos;
+                Vector3 curPos = getMousePosition().Value;
+                if (Vector3.Distance(curPos, prePos) > minDistance)
+                {
+                    lineRenderer.positionCount++;
+                    lineRenderer.SetPosition(lineRenderer.positionCount - 1, curPos);
+                    prePos = curPos;
+                }
+
+                if (lineRenderer.positionCount > 10 && Vector3.Distance(startPos, curPos) < 0.05f)
+                {
+                    lineRenderer.loop = true;
+                    EndGame();
+                }
+            }
+            else
+            {
+                isDrawing = false;
             }
 
-            if (lineRenderer.positionCount > 1 && Vector3.Distance(startPos, curPos) < 0.05f)
-            {
-                EndGame();
-            }
         }
 
     }
 
     void EndGame()
     {
-        Debug.Log("End");
         isDrawing = false;
-        gameController.SetFinishGame();
+        gameController.SetFinishGame(lineRenderer);
     }
 
-    private Vector3 getMousePosition()
+    private Vector3? getMousePosition()
     {
         Vector3 mousePosition = Input.mousePosition;
 
@@ -73,10 +88,26 @@ public class LineLine : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             // The hit.point contains the 3D position where the ray intersects with an object
-            Vector3 hitPosition = hit.point;
-            return hitPosition;
+            if (hit.collider.CompareTag("Board"))
+            {
+                Vector3 hitPosition = hit.point;
+                hitPosition.z -= 0.1f;
+                return hitPosition;
+
+                // Do something specific for objects with the "YourTag" tag
+            }
             // Output the hit position to the console (you can use this position for further actions)
         }
-        return new Vector3();
+        return null;
+    }
+
+    public void SetLinePositionCount(int n)
+    {
+        lineRenderer.positionCount = n;
+    }
+
+    public void SetLineRendererLoop(bool b)
+    {
+        lineRenderer.loop = b;
     }
 }
