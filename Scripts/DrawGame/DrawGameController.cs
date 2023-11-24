@@ -129,7 +129,44 @@ public class DrawGameController : MonoBehaviour
 
     private float calculateAccurateTriangle(LineRenderer lineRenderer)
     {
-        return 0;
+        Vector3 leftOut = new Vector3(-1.25f, 0.425f, 0f);
+        Vector3 leftIn = new Vector3(-0.7f, 0.7375f, 0f);
+        Vector3 topOut = new Vector3(0f, 2.59f, 0f);
+        Vector3 topIn = new Vector3(0f, 1.95f, 0f);
+        Vector3 rightOut = new Vector3(1.25f, 0.425f, 0f);
+        Vector3 rightIn = new Vector3(0.7f, 0.7375f, 0f);
+        int count = 0;
+        Vector3[] positions = new Vector3[lineRenderer.positionCount];
+        lineRenderer.GetPositions(positions);
+        foreach (Vector3 position in positions)
+        {
+            bool isInsideBig = IsPointInTriangle(position, leftOut, topOut, rightOut);
+            bool isInsideSmall = IsPointInTriangle(position, leftIn, topIn, rightIn);
+            if (isInsideBig && !isInsideSmall)
+            {
+                count++;
+            }
+        }
+        float rate = (float)count / lineRenderer.positionCount;
+        return rate;
+    }
+    bool IsPointInTriangle(Vector3 p, Vector3 p0, Vector3 p1, Vector3 p2)
+    {
+        float s = p0.y * p2.x - p0.x * p2.y + (p2.y - p0.y) * p.x + (p0.x - p2.x) * p.y;
+        float t = p0.x * p1.y - p0.y * p1.x + (p0.y - p1.y) * p.x + (p1.x - p0.x) * p.y;
+
+        if ((s < 0) != (t < 0))
+            return false;
+
+        float A = -p1.y * p2.x + p0.y * (p2.x - p1.x) + p0.x * (p1.y - p2.y) + p1.x * p2.y;
+        if (A < 0.0)
+        {
+            s = -s;
+            t = -t;
+            A = -A;
+        }
+
+        return s > 0 && t > 0 && (s + t) <= A;
     }
 
     public float calculateAccurateCircle(LineRenderer lineRenderer)
