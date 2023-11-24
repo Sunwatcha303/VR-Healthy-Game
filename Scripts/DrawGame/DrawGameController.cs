@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
@@ -11,45 +12,38 @@ public class DrawGameController : MonoBehaviour
     // Start is called before the first frame update
     public bool isStart = false;
     public int time = 0;
-    public GameObject startScene, playScene;
     public GameObject[] boards;
-    Line line;
+    public GameObject finishScene;
+    public GameObject playScene;
+    public GameObject Camera;
+    public Line line;
     float timer;
     void Start()
     {
-        startScene.SetActive(true);
-        playScene.SetActive(false);
         PlayerPrefs.SetFloat("nextClick", Time.time);
-        GameObject _gController = GameObject.FindGameObjectWithTag("Line");
-        line = _gController.GetComponent<Line>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isStart)
-        {
-            startScene.SetActive(false);
-            playScene.SetActive(true);
-        }
-        else
-        {
-            startScene.SetActive(true);
-            playScene.SetActive(false);
-        }
+
     }
 
-    public void getTriggerStart()
+    public void setStart(bool b)
     {
-        isStart = true;
+        isStart = b;
     }
 
-    public void getObject()
+    public bool getStart()
     {
-        GameObject board = GameObject.FindWithTag("Board");
-        Destroy(board);
-        int idx = Random.Range(0, boards.Length);
-        Instantiate(boards[idx]);
-        line.lineRenderer.positionCount = 0;
+        return isStart;
+    }
+
+    public void SetFinishGame()
+    {
+        isStart = false;
+        finishScene.SetActive(true);
+        playScene.SetActive(false);
+        Camera.SetActive(false);
     }
 }
