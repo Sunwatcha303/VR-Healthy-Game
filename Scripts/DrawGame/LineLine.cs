@@ -32,10 +32,6 @@ public class LineLine : MonoBehaviour
                 lineRenderer.positionCount = 0;
                 startPos = getMousePosition().Value;
             }
-            else
-            {
-
-            }
         }
         if (gameController.getStart() && Input.GetMouseButtonUp(0))
         {
@@ -52,7 +48,6 @@ public class LineLine : MonoBehaviour
                     lineRenderer.SetPosition(lineRenderer.positionCount - 1, curPos);
                     prePos = curPos;
                 }
-
                 if (lineRenderer.positionCount > 10 && Vector3.Distance(startPos, curPos) < 0.05f)
                 {
                     lineRenderer.loop = true;
@@ -78,25 +73,18 @@ public class LineLine : MonoBehaviour
     {
         Vector3 mousePosition = Input.mousePosition;
 
-        // Create a ray from the camera through the mouse position
         Ray ray = c.ScreenPointToRay(mousePosition);
 
-        // Create a RaycastHit variable to store the hit information
         RaycastHit hit;
 
-        // Perform a raycast to see if it hits any objects in the scene
         if (Physics.Raycast(ray, out hit))
         {
-            // The hit.point contains the 3D position where the ray intersects with an object
             if (hit.collider.CompareTag("Board"))
             {
                 Vector3 hitPosition = hit.point;
                 hitPosition.z -= 0.1f;
                 return hitPosition;
-
-                // Do something specific for objects with the "YourTag" tag
             }
-            // Output the hit position to the console (you can use this position for further actions)
         }
         return null;
     }
@@ -110,4 +98,6 @@ public class LineLine : MonoBehaviour
     {
         lineRenderer.loop = b;
     }
+
+
 }
