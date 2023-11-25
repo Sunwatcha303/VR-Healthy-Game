@@ -15,7 +15,7 @@ public class Line : MonoBehaviour
     private Vector3 prePosR;
     private Vector3 prePosL;
     private Vector3 startPos;
-    public float minDistance = 0.1f;
+    public float minDistance = 0.001f;
 
     public DrawGameController gameController;
     void Start()
@@ -55,24 +55,43 @@ public class Line : MonoBehaviour
         }
         if (isDrawing)
         {
-            Vector3 curPos = currentHand.linePointer.GetPosition(1);
-            // curPos.z = 0.809f;
-            if (Vector3.Distance(curPos, prePos) > minDistance)
+            if (currentHand.linePointer.positionCount > 1)
             {
-                lineRenderer.positionCount++;
-                lineRenderer.SetPosition(lineRenderer.positionCount - 1, curPos);
-                prePos = curPos;
-            }
+                Vector3 curPos = currentHand.linePointer.GetPosition(1);
 
-            if (lineRenderer.positionCount > 1 && Vector3.Distance(startPos, curPos) < 0.05f)
+                if (Vector3.Distance(curPos, prePos) > minDistance)
+                {
+                    lineRenderer.positionCount++;
+                    lineRenderer.SetPosition(lineRenderer.positionCount - 1, curPos);
+                    prePos = curPos;
+                }
+
+                if (lineRenderer.positionCount > 10 && Vector3.Distance(startPos, curPos) < 0.05f)
+                {
+                    lineRenderer.loop = true;
+                    EndGame();
+                }
+            }
+            else
             {
-                EndGame();
+                isDrawing = false;
             }
         }
     }
 
     void EndGame()
     {
+        isDrawing = false;
+        gameController.SetFinishGame(lineRenderer);
+    }
 
+    public void SetLinePositionCount(int n)
+    {
+        lineRenderer.positionCount = n;
+    }
+
+    public void SetLineRendererLoop(bool b)
+    {
+        lineRenderer.loop = b;
     }
 }
