@@ -24,6 +24,7 @@ public class SpawnBall : MonoBehaviour
     bool isLeftHand = false;
     bool isRightHand = false;
     bool isOneHand = false;
+    public GameController gameController;
 
     // Update is called once per frame
     void Start()
@@ -32,11 +33,16 @@ public class SpawnBall : MonoBehaviour
     }
     void Update()
     {
+        if (q.Count == 0 && listBallInstance.Count == 0)
+        {
+            EndGame();
+        }
         if (ready && (Time.time > spawnTime))
         {
             if (isQSystem)
             {
                 GameObject temp;
+                ShuffleQueue<SelectBallLocation>(q);
                 SelectBallLocation selection = q.Dequeue();
                 if (isOneHand)
                 {
@@ -127,9 +133,16 @@ public class SpawnBall : MonoBehaviour
                     Vector3 spawnPosition = new Vector3(selection.getX(), selection.getY(), posZ);
                     temp.transform.position = spawnPosition;
                 }
+                q.Clear();
             }
             ready = false;
         }
+
+    }
+
+    public void EndGame()
+    {
+        gameController.setEndGame();
     }
     public void setReady()
     {
@@ -234,4 +247,33 @@ public class SpawnBall : MonoBehaviour
         else if (isNormal) return "normal";
         else return "far";
     }
+
+    private void ShuffleQueue<T>(Queue<T> queue)
+    {
+        // Convert the Queue to a List
+        List<T> list = new List<T>(queue);
+
+        // Use Fisher-Yates shuffle algorithm to shuffle the list
+        System.Random rand = new System.Random();
+        int n = list.Count;
+        for (int i = n - 1; i > 0; i--)
+        {
+            int j = rand.Next(0, i + 1);
+            T temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+        }
+
+        // Convert the shuffled List back to a Queue
+        queue.Clear();
+        foreach (var item in list)
+        {
+            queue.Enqueue(item);
+        }
+    }
+    public void RemoveBall(GameObject g)
+    {
+        listBallInstance.Remove(g);
+    }
 }
+

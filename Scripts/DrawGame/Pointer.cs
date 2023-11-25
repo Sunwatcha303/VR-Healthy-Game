@@ -21,7 +21,10 @@ public class Pointer : MonoBehaviour
         linePointer.enabled = (OVRInput.GetActiveController() == OVRInput.Controller.Touch);
         Ray ray = new Ray(rayTransform.position, rayTransform.forward);
         linePointer.SetPosition(0, ray.origin);
-        linePointer.SetPosition(1, CalculateEnd());
+        if (CalculateEnd().HasValue)
+        {
+            linePointer.SetPosition(1, CalculateEnd().Value);
+        }
     }
 
     private Vector3 DefaultDistance()
@@ -29,25 +32,26 @@ public class Pointer : MonoBehaviour
         return rayTransform.position + (rayTransform.forward * rayDrawDistance);
     }
 
-    private Vector3 CalculateEnd()
+    private Vector3? CalculateEnd()
     {
         RaycastHit hit = CreateForwardRayCast();
-        Vector3 endPos = DefaultDistance();
 
-        if (hit.collider != null)
+        if (hit.collider.CompareTag("Board"))
         {
-            endPos = hit.point;
+            Vector3 endPos = hit.point;
+            endPos.z -= 0.1f;
+            return endPos;
         }
 
-        return endPos;
+        return null;
     }
 
     private RaycastHit CreateForwardRayCast()
     {
-        RaycastHit hit;
+        RaycastHit hit = new RaycastHit();
         Ray ray = new Ray(rayTransform.position, rayTransform.forward);
 
-        Physics.Raycast(ray, out hit, rayDrawDistance);
+        Physics.Raycast(ray, out hit/*, rayDrawDistance*/);
         return hit;
     }
 }

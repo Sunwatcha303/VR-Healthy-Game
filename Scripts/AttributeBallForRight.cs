@@ -31,6 +31,7 @@ public class AttributeBallForRight : MonoBehaviour
         {
             Destroy(this.gameObject);
             gameController.setScore();
+            spawner.RemoveBall(this.gameObject);
             if (spawner.getQSystem())
             {
                 spawner.setReady();

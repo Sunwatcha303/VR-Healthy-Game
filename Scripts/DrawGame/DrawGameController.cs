@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using Random = UnityEngine.Random;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class DrawGameController : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -208,5 +209,10 @@ public class DrawGameController : MonoBehaviour
             squareCheck = false;
             triangleCheck = true;
         }
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }

@@ -28,9 +28,4 @@ public class MainMenuController : MonoBehaviour
             mainCamera.SetActive(false);
         }
     }
-
-    public void Exit()
-    {
-        Application.Quit();
-    }
 }
