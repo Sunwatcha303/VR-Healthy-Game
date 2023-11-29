@@ -10,26 +10,31 @@ public class GameController : MonoBehaviour
 
 {
     bool isStart = false;
-    public int score = 0;
     public GameObject mainCamera;
     public GameObject mainMenu, endGameMenu;
     public GameObject playScene;
     public GameObject setTimer;
-    public TextMesh scoreLB, timeLB;
-    public TextMeshProUGUI totalScore;
+    public TextMesh scoreLH, scoreRH, timeLB;
+    public TextMeshProUGUI totalScore, scoreLeftText, scoreRightText;
     float timer;
     float time;
     public SpawnBall spawnBall;
+    
+    private int scoreLeft = 0;
+    private int scoreRight = 0;
+    private int score = 0;
     // Start is called before the first frame update
     void Start()
     {
         playScene.SetActive(false);
         PlayerPrefs.SetFloat("nextClick", Time.time);
         Time.timeScale = 0;
-
-        string input = setTimer.GetComponent<TMP_InputField>().text;
-        int t = (input == "") ? 0 : int.Parse(input);
-        time = t;
+        if (spawnBall.isQSystem)
+        {
+            string input = setTimer.GetComponent<TMP_InputField>().text;
+            int t = (input == "") ? 0 : int.Parse(input);
+            time = t;
+        }
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -38,10 +43,11 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreLB.text = "Score : " + score;
-        timeLB.text = "Time : " + String.Format("{0:0.00}", timer - Time.time);
+        scoreLH.text = "Score Left Hand: " + scoreLeft;
+        scoreRH.text = "Score Right Hand: " + scoreRight;
+        timeLB.text = "Time : " + String.Format("{0:0.00}", Mathf.Abs(timer - Time.time));
 
-        if (Time.time > timer && isStart)
+        if (spawnBall.isQSystem && Time.time > timer && isStart)
         {
             setEndGame();
         }
@@ -56,7 +62,7 @@ public class GameController : MonoBehaviour
         string input = setTimer.GetComponent<TMP_InputField>().text;
         int t = (input == "") ? 0 : int.Parse(input);
         time = t;
-        timer = time + Time.time;
+        timer = (spawnBall.isQSystem) ? time + Time.time : Time.time;
 
         playScene.SetActive(true);
 
@@ -66,6 +72,15 @@ public class GameController : MonoBehaviour
     public void setScore()
     {
         score += 1;
+
+    }
+    public void setScoreLeft()
+    {
+        scoreLeft += 1;
+    }
+    public void setScoreRight()
+    {
+        scoreRight += 1;
     }
     public void setEndGame()
     {
@@ -76,12 +91,24 @@ public class GameController : MonoBehaviour
         mainCamera.SetActive(false);
         mainMenu.SetActive(true);
         endGameMenu.SetActive(true);
-        totalScore.text = "Total Score: " + score;
+        totalScore.text = "Total Score: " + (scoreLeft+scoreRight);
+        scoreLeftText.text = "Score Left Hand: " + scoreLeft;
+        scoreRightText.text = "Score Right Hand: " + scoreRight;
         spawnBall.DestroyBall();
 
-        GetComponent<Logging>().SaveToLog(score, time, spawnBall.getSizeListBall(), GetComponent<ModeToPlay>().leftFlag, GetComponent<ModeToPlay>().rightFlag, spawnBall.getDistance());
+        GetComponent<Logging>().SaveToLog((spawnBall.isQSystem)? "random":"set",
+            scoreLeft,
+            scoreRight,
+            (spawnBall.isQSystem)? time : Mathf.Abs(timer - Time.time),
+            (spawnBall.isQSystem)? spawnBall.q.Count + scoreLeft + scoreRight : scoreLeft + scoreRight,
+            GetComponent<ModeToPlay>().leftFlag,
+            GetComponent<ModeToPlay>().rightFlag,
+            spawnBall.getDistance()
+        );
 
         score = 0;
+        scoreLeft = 0;
+        scoreRight = 0;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -94,6 +121,8 @@ public class GameController : MonoBehaviour
         playScene.SetActive(false);
 
         score = 0;
+        scoreLeft = 0;
+        scoreRight = 0;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
