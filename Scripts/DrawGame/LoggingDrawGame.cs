@@ -1,24 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
 using System.IO;
-using System.Text;
+using UnityEngine;
 
-public class Logging : MonoBehaviour
+public class LoggingDrawGame : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
-
     public void AppendToCsv(string filePath, string[] data)
     {
         try
@@ -37,11 +35,11 @@ public class Logging : MonoBehaviour
         }
     }
 
-    public void SaveToLog(int score, float time, int amount, bool isLeft, bool isRight, string dist)
+    public void SaveToLog(int picture, double accurate, double time)
     {
-        string filePath = Path.Combine(Application.persistentDataPath, "ballgame.csv");
+        string filePath = Path.Combine(Application.persistentDataPath, "drawgame.csv");
 
-        string[] dataToAppend = { PlayerPrefs.GetString("currentId"), PlayerPrefs.GetString("currentName"), "" + score, "" + time, "" + amount, "" + isLeft, "" + isRight, dist };
+        string[] dataToAppend = { PlayerPrefs.GetString("currentId"), PlayerPrefs.GetString("currentName"), "" + picture, accurate.ToString("F2"), "" + time.ToString("F2")};
 
         AppendToCsv(filePath, dataToAppend);
     }

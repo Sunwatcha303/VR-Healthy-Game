@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
 public class Database : MonoBehaviour
 {
     private string csvUserFileName = "user.csv";
     private string csvPatientFileName = "patient.csv";
     private string csvBallGameFileName = "ballgame.csv";
-    private string csvDrawGameFileName = "draw.csv";
+    private string csvDrawGameFileName = "drawgame.csv";
     private Dictionary<string, string> user;
     private Dictionary<string, PatientData> patients;
 
@@ -68,6 +69,10 @@ public class Database : MonoBehaviour
                 foreach(string line in linesBall)
                 {
                     string[] input = line.Split(",");
+                    if (input[0] != String.Empty && !patients.ContainsKey(input[0]))
+                    {
+                        patients[input[0]] = new PatientData(input[0], input[1]);
+                    }
                     patients[input[0]].AddBallGameData(input[2], input[3], input[4], input[5], input[6], input[7]);
                 }
             }
