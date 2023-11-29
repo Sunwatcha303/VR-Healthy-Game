@@ -20,6 +20,7 @@ public class DrawGameController : MonoBehaviour
     public GameObject playScene;
     public GameObject Camera;
     public Line line;
+    public LoggingDrawGame logging;
     float timer;
     private bool circleCheck = false, squareCheck = false, triangleCheck = false;
 
@@ -38,6 +39,7 @@ public class DrawGameController : MonoBehaviour
 
     public void setStart(bool b)
     {
+        PlayerPrefs.SetFloat("time", Time.time);
         isStart = b;
     }
 
@@ -48,23 +50,29 @@ public class DrawGameController : MonoBehaviour
 
     public void SetFinishGame(LineRenderer lineRenderer)
     {
+        int pic = 0;
+        timer = Time.time - PlayerPrefs.GetFloat("time");
         isStart = false;
         float accurate = 0;
         if (circleCheck)
         {
             accurate = calculateAccurateCircle(lineRenderer);
+            pic = 0;
         }
         else if (squareCheck)
         {
             accurate = calculateAccurateSquare(lineRenderer);
+            pic = 1;
         }
         else
         {
             accurate = calculateAccurateTriangle(lineRenderer);
+            pic = 2;
         }
         AccurateText.GetComponent<TextMeshProUGUI>().text = (accurate * 100).ToString("F2") + "%";
         finishScene.SetActive(true);
         Camera.SetActive(false);
+        logging.SaveToLog(pic, accurate*100, timer);
     }
 
     private float calculateAccurateSquare(LineRenderer lineRenderer)
@@ -172,7 +180,7 @@ public class DrawGameController : MonoBehaviour
 
     public float calculateAccurateCircle(LineRenderer lineRenderer)
     {
-        float radiusIn = 0.8125f, radiusOut = 1.25f, width = 0.04303265f;
+        float radiusIn = 1.225f/2, radiusOut = 1.885f/2, width = 0.04303265f;
         int count = 0;
         Vector3[] positions = new Vector3[lineRenderer.positionCount];
         lineRenderer.GetPositions(positions);
