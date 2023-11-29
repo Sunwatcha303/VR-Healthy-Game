@@ -12,9 +12,11 @@ public class LobbyController : MonoBehaviour
     public Button btnDrawGame;
     public TMP_InputField usernameInput;
     public TMP_InputField passwordInput;
+    public TMP_InputField idInput;
     public Toggle toggle;
     public GameObject loginScene;
     public GameObject menuScene;
+    public GameObject selectScene;
     public Database database;
 
     void Start()
@@ -24,12 +26,12 @@ public class LobbyController : MonoBehaviour
         if (PlayerPrefs.GetInt("IsLoggedIn", 0) == 0)
         {
             loginScene.SetActive(true);
-            menuScene.SetActive(false);
+            selectScene.SetActive(false);
         }
         else
         {
             loginScene.SetActive(false);
-            menuScene.SetActive(true);
+            selectScene.SetActive(true);
         }
     }
 
@@ -61,7 +63,7 @@ public class LobbyController : MonoBehaviour
         if (password == database.GetPasswordByUsername(username))
         {
             loginScene.SetActive(false);
-            menuScene.SetActive(true);
+            selectScene.SetActive(true);
             usernameInput.text = "";
             passwordInput.text = "";
             PlayerPrefs.SetInt("IsLoggedIn", 1);
@@ -78,7 +80,7 @@ public class LobbyController : MonoBehaviour
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.Save();
         loginScene.SetActive(true);
-        menuScene.SetActive(false);
+        selectScene.SetActive(false);
     }
 
     public void ShowPassword()
@@ -94,5 +96,28 @@ public class LobbyController : MonoBehaviour
             passwordInput.inputType = TMP_InputField.InputType.Password;
         }
         passwordInput.ForceLabelUpdate();
+    }
+
+    public void SelectPatient()
+    {
+        string id = idInput.text;
+        if(database.GetNameById(id) != null)
+        {
+            selectScene.SetActive(false);
+            menuScene.SetActive(true);
+            PlayerPrefs.SetString("currentId", id);
+            PlayerPrefs.SetString("currentName", database.GetNameById(id));
+            PlayerPrefs.Save();
+            idInput.text = "";
+        }
+    }
+
+    public void Back()
+    {
+        menuScene.SetActive(false);
+        selectScene.SetActive(true);
+        PlayerPrefs.DeleteKey("currentId");
+        PlayerPrefs.DeleteKey("currentName");
+        PlayerPrefs.Save();
     }
 }
