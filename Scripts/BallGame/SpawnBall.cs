@@ -33,7 +33,7 @@ public class SpawnBall : MonoBehaviour
     }
     void Update()
     {
-        if (q.Count == 0 && listBallInstance.Count == 0)
+        if (!isQSystem && q.Count == 0 && listBallInstance.Count == 0)
         {
             EndGame();
         }
@@ -41,9 +41,8 @@ public class SpawnBall : MonoBehaviour
         {
             if (isQSystem)
             {
+                Debug.Log("Random"+isQSystem);
                 GameObject temp;
-                ShuffleQueue<SelectBallLocation>(q);
-                SelectBallLocation selection = q.Dequeue();
                 if (isOneHand)
                 {
                     if (isLeftHand)
@@ -82,8 +81,9 @@ public class SpawnBall : MonoBehaviour
                 {
                     posZ = 0.9f;
                 }
-                Debug.Log(posZ);
-                Vector3 spawnPosition = new Vector3(selection.getX(), selection.getY(), posZ);
+                double posY = random.NextDouble() * (1.5 - 0.5) + 0.5;
+                double posX = random.NextDouble() * (0.75 + 0.75) - 0.75;
+                Vector3 spawnPosition = new Vector3((float)posX, (float)posY, posZ);
                 temp.transform.position = spawnPosition;
             }
             else
@@ -192,16 +192,9 @@ public class SpawnBall : MonoBehaviour
         return isQSystem;
     }
 
-    public void setQSystem()
+    public void setQSystem(bool b)
     {
-        if (isQSystem)
-        {
-            isQSystem = false;
-        }
-        else
-        {
-            isQSystem = true;
-        }
+        isQSystem = b;
     }
 
     public void DestroyBall()

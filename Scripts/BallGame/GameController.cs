@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
     float timer;
     float time;
     public SpawnBall spawnBall;
+    public Logging loggin;
     
     private int scoreLeft = 0;
     private int scoreRight = 0;
@@ -96,11 +97,11 @@ public class GameController : MonoBehaviour
         scoreRightText.text = "Score Right Hand: " + scoreRight;
         spawnBall.DestroyBall();
 
-        GetComponent<Logging>().SaveToLog((spawnBall.isQSystem)? "random":"set",
+        loggin.SaveToLog((spawnBall.isQSystem)? "random":"set",
             scoreLeft,
             scoreRight,
             (spawnBall.isQSystem)? time : Mathf.Abs(timer - Time.time),
-            (spawnBall.isQSystem)? spawnBall.q.Count + scoreLeft + scoreRight : scoreLeft + scoreRight,
+            scoreLeft + scoreRight,
             GetComponent<ModeToPlay>().leftFlag,
             GetComponent<ModeToPlay>().rightFlag,
             spawnBall.getDistance()

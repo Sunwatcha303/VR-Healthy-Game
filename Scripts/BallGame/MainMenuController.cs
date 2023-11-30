@@ -6,7 +6,7 @@ public class MainMenuController : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject mainMenu;
-    public GameObject selectBallMenu;
+    public GameObject setModeMenu;
     public GameObject mainCamera;
     public GameController controller;
     public SpawnBall spawnBall;
@@ -24,7 +24,7 @@ public class MainMenuController : MonoBehaviour
             spawnBall.DestroyBall();
             controller.setFinish();
             mainMenu.SetActive(true);
-            selectBallMenu.SetActive(true);
+            setModeMenu.SetActive(true);
             mainCamera.SetActive(false);
         }
     }

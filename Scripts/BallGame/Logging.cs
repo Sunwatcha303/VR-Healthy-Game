@@ -41,5 +41,7 @@ public class Logging : MonoBehaviour
         string filePath = Path.Combine(Application.persistentDataPath, "ballgame.csv");
 
         string[] dataToAppend = { PlayerPrefs.GetString("currentId"), PlayerPrefs.GetString("currentName"), "" + mode, "" + scoreLeft, "" + scoreRight, "" + time, "" + amount, "" + isLeft, "" + isRight, dist };
+
+        AppendToCsv(filePath, dataToAppend);
     }
 }
