@@ -13,6 +13,7 @@ public class DrawGameController : MonoBehaviour
     // Start is called before the first frame update
     // public float radiusIn = 3.25f, radiusOut = 5f, width = 0.1721306f;
     public GameObject AccurateText;
+    public GameObject timeText;
     public GameObject center;
     public bool isStart = false;
     public int time = 0;
@@ -70,6 +71,7 @@ public class DrawGameController : MonoBehaviour
             pic = 2;
         }
         AccurateText.GetComponent<TextMeshProUGUI>().text = (accurate * 100).ToString("F2") + "%";
+        timeText.GetComponent<TextMeshProGUI>().text = "Time: " + String.Format("{0:0.00}", timer);
         finishScene.SetActive(true);
         Camera.SetActive(false);
         logging.SaveToLog(pic, accurate*100, timer);

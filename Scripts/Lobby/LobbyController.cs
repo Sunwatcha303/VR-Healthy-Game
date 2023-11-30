@@ -31,7 +31,14 @@ public class LobbyController : MonoBehaviour
         else
         {
             loginScene.SetActive(false);
-            selectScene.SetActive(true);
+            if(PlayerPrefs.GetString("currentId","0") == "0")
+            {
+                selectScene.SetActive(true);
+            }
+            else
+            {
+                menuScene.SetActive(true);
+            }
         }
     }
 

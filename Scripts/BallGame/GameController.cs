@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     public GameObject mainMenu, endGameMenu;
     public GameObject playScene;
     public GameObject setTimer;
+    public GameObject timeText;
     public TextMesh scoreLH, scoreRH, timeLB;
     public TextMeshProUGUI totalScore, scoreLeftText, scoreRightText;
     float timer;
@@ -95,6 +96,15 @@ public class GameController : MonoBehaviour
         totalScore.text = "Total Score: " + (scoreLeft+scoreRight);
         scoreLeftText.text = "Score Left Hand: " + scoreLeft;
         scoreRightText.text = "Score Right Hand: " + scoreRight;
+        timeText.GetComponent<TextMeshProUGUI>().text = "Time: " + String.Format("{0:0.00}", Mathf.Abs(timer - Time.time));
+        if (spawnBall.isQSystem)
+        {
+            timeText.SetActive(false);
+        }
+        else
+        {
+            timeText.SetActive(true);
+        }
         spawnBall.DestroyBall();
 
         loggin.SaveToLog((spawnBall.isQSystem)? "random":"set",
