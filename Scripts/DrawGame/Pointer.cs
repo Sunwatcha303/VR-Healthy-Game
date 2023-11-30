@@ -39,7 +39,7 @@ public class Pointer : MonoBehaviour
         if (hit.collider.CompareTag("Board"))
         {
             Vector3 endPos = hit.point;
-            endPos.z -= 0.1f;
+            endPos.z -= 0.05f;
             return endPos;
         }
 
@@ -51,7 +51,7 @@ public class Pointer : MonoBehaviour
         RaycastHit hit = new RaycastHit();
         Ray ray = new Ray(rayTransform.position, rayTransform.forward);
 
-        Physics.Raycast(ray, out hit/*, rayDrawDistance*/);
+        Physics.Raycast(ray, out hit, rayDrawDistance);
         return hit;
     }
 }

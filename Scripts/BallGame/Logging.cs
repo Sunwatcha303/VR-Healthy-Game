@@ -10,7 +10,6 @@ public class Logging : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -37,12 +36,10 @@ public class Logging : MonoBehaviour
         }
     }
 
-    public void SaveToLog(int score, float time, int amount, bool isLeft, bool isRight, string dist)
+    public void SaveToLog(string mode, int scoreLeft, int scoreRight, float time, int amount, bool isLeft, bool isRight, string dist)
     {
         string filePath = Path.Combine(Application.persistentDataPath, "ballgame.csv");
 
-        string[] dataToAppend = { PlayerPrefs.GetString("currentId"), PlayerPrefs.GetString("currentName"), "" + score, "" + time, "" + amount, "" + isLeft, "" + isRight, dist };
-
-        AppendToCsv(filePath, dataToAppend);
+        string[] dataToAppend = { PlayerPrefs.GetString("currentId"), PlayerPrefs.GetString("currentName"), "" + mode, "" + scoreLeft, "" + scoreRight, "" + time, "" + amount, "" + isLeft, "" + isRight, dist };
     }
 }

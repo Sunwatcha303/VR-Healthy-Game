@@ -30,7 +30,7 @@ public class AttributeBallForRight : MonoBehaviour
         if (obj.gameObject.tag.Equals("RightHand"))
         {
             Destroy(this.gameObject);
-            gameController.setScore();
+            gameController.setScoreRight();
             spawner.RemoveBall(this.gameObject);
             if (spawner.getQSystem())
             {

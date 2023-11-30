@@ -16,7 +16,7 @@ public class SpawnBall : MonoBehaviour
     float posZ = 0;
     public GameObject posPlayer;
     public GameObject[] table;
-    Queue<SelectBallLocation> q;
+    public Queue<SelectBallLocation> q;
     List<GameObject> listBallInstance = new List<GameObject>();
     System.Random random = new System.Random();
     int count = 0;
