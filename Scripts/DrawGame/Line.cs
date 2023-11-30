@@ -55,7 +55,7 @@ public class Line : MonoBehaviour
         }
         if (isDrawing)
         {
-            if (currentHand.linePointer.positionCount > 1)
+            if (currentHand.linePointer.positionCount > 0)
             {
                 Vector3 curPos = currentHand.linePointer.GetPosition(1);
 

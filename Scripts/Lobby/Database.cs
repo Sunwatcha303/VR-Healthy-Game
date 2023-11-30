@@ -43,7 +43,12 @@ public class Database : MonoBehaviour
         }
         else
         {
-            Debug.LogError("CSV file not found!");
+            using (StreamWriter sw = File.CreateText(filePath))
+            {
+                sw.WriteLine("username,password");
+                sw.WriteLine("admin,1234");
+                sw.WriteLine("1234,admin");
+            }
         }
     }
 
@@ -62,42 +67,55 @@ public class Database : MonoBehaviour
                     patients[input[0]] = new PatientData(input[0], input[1]);
                 }
             }
-
-            if (File.Exists(filePathBallGame))
+        }
+        else
+        {
+            using (StreamWriter sw = File.CreateText(filePath))
             {
-                string[] linesBall = File.ReadAllLines(filePathBallGame);
-                foreach(string line in linesBall)
+                // You can write content to the file if needed
+                sw.WriteLine("id,name");
+                sw.WriteLine("0001,Jack");
+                sw.WriteLine("0002,John");
+            }
+        }
+        if (File.Exists(filePathBallGame))
+        {
+            string[] linesBall = File.ReadAllLines(filePathBallGame);
+            foreach (string line in linesBall)
+            {
+                string[] input = line.Split(",");
+                if (input[0] != String.Empty && !patients.ContainsKey(input[0]))
                 {
-                    string[] input = line.Split(",");
-                    if (input[0] != String.Empty && !patients.ContainsKey(input[0]))
-                    {
-                        patients[input[0]] = new PatientData(input[0], input[1]);
-                    }
-                    patients[input[0]].AddBallGameData(input[2], input[3], input[4], input[5], input[6], input[7]);
+                    patients[input[0]] = new PatientData(input[0], input[1]);
                 }
-            }
-            else
-            {
-                Debug.LogError("CSV file not found! " + filePathBallGame);
-            }
-
-            if (File.Exists(filePathDrawGame))
-            {
-                string[] linesBall = File.ReadAllLines(filePathDrawGame);
-                foreach (string line in linesBall)
-                {
-                    string[] input = line.Split(",");
-                    patients[input[0]].AddDrawGameData(input[2], input[3], input[4]);
-                }
-            }
-            else
-            {
-                Debug.LogError("CSV file not found! " + filePathDrawGame);
+                patients[input[0]].AddBallGameData(input[2], input[3], input[4], input[5], input[6], input[7]);
             }
         }
         else
         {
-            Debug.LogError("CSV file not found! "+filePath);
+            using (StreamWriter sw = File.CreateText(filePathBallGame))
+            {
+                // You can write content to the file if needed
+                sw.WriteLine("id,name,mode,scoreLeft,scoreRight,time,amount,isLeft,isRight,dist");
+            }
+        }
+
+        if (File.Exists(filePathDrawGame))
+        {
+            string[] linesBall = File.ReadAllLines(filePathDrawGame);
+            foreach (string line in linesBall)
+            {
+                string[] input = line.Split(",");
+                patients[input[0]].AddDrawGameData(input[2], input[3], input[4]);
+            }
+        }
+        else
+        {
+            using (StreamWriter sw = File.CreateText(filePathDrawGame))
+            {
+                // You can write content to the file if needed
+                sw.WriteLine("id,name,picture,accurate,time");
+            }
         }
     }
 
