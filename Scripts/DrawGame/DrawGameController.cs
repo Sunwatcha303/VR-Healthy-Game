@@ -71,7 +71,7 @@ public class DrawGameController : MonoBehaviour
             pic = 2;
         }
         AccurateText.GetComponent<TextMeshProUGUI>().text = (accurate * 100).ToString("F2") + "%";
-        timeText.GetComponent<TextMeshProGUI>().text = "Time: " + String.Format("{0:0.00}", timer);
+        timeText.GetComponent<TextMeshProUGUI>().text = "Time: " + String.Format("{0:0.00}", timer);
         finishScene.SetActive(true);
         Camera.SetActive(false);
         logging.SaveToLog(pic, accurate*100, timer);

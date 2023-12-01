@@ -71,17 +71,17 @@ public class SpawnBall : MonoBehaviour
                 }
                 if (isNear)
                 {
-                    posZ = 0.5f;
+                    posZ = 0.3f;
                 }
                 else if (isNormal)
                 {
-                    posZ = 0.7f;
+                    posZ = 0.5f;
                 }
                 else
                 {
-                    posZ = 0.9f;
+                    posZ = 0.7f;
                 }
-                double posY = random.NextDouble() * (1.5 - 0.5) + 0.5;
+                double posY = random.NextDouble() * (1.75 - 1.25) + 1.25;
                 double posX = random.NextDouble() * (0.75 + 0.75) - 0.75;
                 Vector3 spawnPosition = new Vector3((float)posX, (float)posY, posZ);
                 temp.transform.position = spawnPosition;
@@ -119,15 +119,15 @@ public class SpawnBall : MonoBehaviour
                     }
                     if (isNear)
                     {
-                        posZ = 0.5f;
+                        posZ = 0.3f;
                     }
                     else if (isNormal)
                     {
-                        posZ = 0.7f;
+                        posZ = 0.5f;
                     }
                     else
                     {
-                        posZ = 0.9f;
+                        posZ = 0.7f;
                     }
                     Debug.Log(posZ);
                     Vector3 spawnPosition = new Vector3(selection.getX(), selection.getY(), posZ);
