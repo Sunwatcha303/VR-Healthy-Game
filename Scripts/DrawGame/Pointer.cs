@@ -39,7 +39,7 @@ public class Pointer : MonoBehaviour
         if (hit.collider.CompareTag("Board"))
         {
             Vector3 endPos = hit.point;
-            endPos.z -= 0.05f;
+            endPos.z -= 0.1f;
             return endPos;
         }
 
