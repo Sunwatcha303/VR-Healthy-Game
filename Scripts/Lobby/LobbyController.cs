@@ -10,10 +10,13 @@ public class LobbyController : MonoBehaviour
     // Start is called before the first frame update
     public Button btnBallGame;
     public Button btnDrawGame;
-    public TMP_InputField usernameInput;
-    public TMP_InputField passwordInput;
+    public TMP_InputField usernameInputLogin;
+    public TMP_InputField passwordInputLogin;
+    public TMP_InputField usernameInputAdd;
+    public TMP_InputField passwordInputAdd;
     public TMP_InputField idInput;
-    public Toggle toggle;
+    public Toggle toggleLogin;
+    public Toggle toggleAdd;
     public GameObject loginScene;
     public GameObject menuScene;
     public GameObject selectScene;
@@ -65,20 +68,35 @@ public class LobbyController : MonoBehaviour
 
     public void Login()
     {
-        string username = usernameInput.text;
-        string password = passwordInput.text;
+        string username = usernameInputLogin.text;
+        string password = passwordInputLogin.text;
         if (password == database.GetPasswordByUsername(username))
         {
             loginScene.SetActive(false);
             selectScene.SetActive(true);
-            usernameInput.text = "";
-            passwordInput.text = "";
+            usernameInputLogin.text = "";
+            passwordInputLogin.text = "";
             PlayerPrefs.SetInt("IsLoggedIn", 1);
             PlayerPrefs.Save();
         }
         else
         {
             Debug.Log("failed");
+        }
+    }
+
+    public void AddUser()
+    {
+        string username = usernameInputAdd.text;
+        string password = passwordInputAdd.text;
+        
+        if(database.GetPasswordByUsername(username) == null)
+        {
+            database.AddUser(username, password);
+        }
+        else
+        {
+            Debug.Log(database.GetPasswordByUsername(username));
         }
     }
 
@@ -90,21 +108,34 @@ public class LobbyController : MonoBehaviour
         selectScene.SetActive(false);
     }
 
-    public void ShowPassword()
+    public void ShowPasswordLgoin()
     {
-        if (toggle.isOn)
+        if (toggleLogin.isOn)
         {
-            passwordInput.contentType = TMP_InputField.ContentType.Standard;
-            passwordInput.inputType = TMP_InputField.InputType.Standard;
+            passwordInputLogin.contentType = TMP_InputField.ContentType.Standard;
+            passwordInputLogin.inputType = TMP_InputField.InputType.Standard;
         }
         else
         {
-            passwordInput.contentType = TMP_InputField.ContentType.Password;
-            passwordInput.inputType = TMP_InputField.InputType.Password;
+            passwordInputLogin.contentType = TMP_InputField.ContentType.Password;
+            passwordInputLogin.inputType = TMP_InputField.InputType.Password;
         }
-        passwordInput.ForceLabelUpdate();
+        passwordInputLogin.ForceLabelUpdate();
     }
-
+    public void ShowPasswordAdd()
+    {
+        if (toggleAdd.isOn)
+        {
+            passwordInputAdd.contentType = TMP_InputField.ContentType.Standard;
+            passwordInputAdd.inputType = TMP_InputField.InputType.Standard;
+        }
+        else
+        {
+            passwordInputAdd.contentType = TMP_InputField.ContentType.Password;
+            passwordInputAdd.inputType = TMP_InputField.InputType.Password;
+        }
+        passwordInputAdd.ForceLabelUpdate();
+    }
     public void SelectPatient()
     {
         string id = idInput.text;

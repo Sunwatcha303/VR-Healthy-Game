@@ -38,10 +38,13 @@ public class Logging : MonoBehaviour
 
     public void SaveToLog(string mode, int scoreLeft, int scoreRight, float time, int amount, bool isLeft, bool isRight, string dist)
     {
-        string filePath = Path.Combine(Application.persistentDataPath, "ballgame.csv");
+        string path = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database" , "ballgame.csv");
+        //for build
+        //string path = Path.Combine(Application.dataPath, "ballgame.csv");
+        Debug.Log(path);
 
         string[] dataToAppend = { PlayerPrefs.GetString("currentId"), PlayerPrefs.GetString("currentName"), "" + mode, "" + scoreLeft, "" + scoreRight, "" + time, "" + amount, "" + isLeft, "" + isRight, dist };
 
-        AppendToCsv(filePath, dataToAppend);
+        AppendToCsv(path, dataToAppend);
     }
 }
