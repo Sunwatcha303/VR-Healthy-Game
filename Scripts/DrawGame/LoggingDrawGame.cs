@@ -37,10 +37,13 @@ public class LoggingDrawGame : MonoBehaviour
 
     public void SaveToLog(int picture, double accurate, double time)
     {
-        string filePath = Path.Combine(Application.persistentDataPath, "drawgame.csv");
+        string path = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database" ,"drawgame.csv");
+        //for build
+        //string path = Path.Combine(Application.dataPath ,"drawgame.csv");
+        Debug.Log(path);
 
         string[] dataToAppend = { PlayerPrefs.GetString("currentId"), PlayerPrefs.GetString("currentName"), "" + picture, accurate.ToString("F2"), "" + time.ToString("F2")};
 
-        AppendToCsv(filePath, dataToAppend);
+        AppendToCsv(path, dataToAppend);
     }
 }

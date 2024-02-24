@@ -10,21 +10,30 @@ public class Database : MonoBehaviour
     private string csvPatientFileName = "patient.csv";
     private string csvBallGameFileName = "ballgame.csv";
     private string csvDrawGameFileName = "drawgame.csv";
+    string filePathUser;
+    string filePathPatient;
+    string filePathBallGame;
+    string filePathDrawGame;
     private Dictionary<string, string> user;
     private Dictionary<string, PatientData> patients;
 
     void Start()
     {
         // Combine the persistent data path and the file name
-        string filePathUser = Path.Combine(Application.persistentDataPath, csvUserFileName);
-        string filePathPatient = Path.Combine(Application.persistentDataPath, csvPatientFileName);
-        string filePathBallGame = Path.Combine(Application.persistentDataPath, csvBallGameFileName);
-        string filePathDrawGame = Path.Combine(Application.persistentDataPath, csvDrawGameFileName);
+        filePathUser = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", csvUserFileName);
+        filePathPatient = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", csvPatientFileName);
+        filePathBallGame = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", csvBallGameFileName);
+        filePathDrawGame = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", csvDrawGameFileName);
+        // for build
+        //string filePathUser = Path.Combine(Application.dataPath, csvUserFileName);
+        //string filePathPatient = Path.Combine(Application.dataPath, csvPatientFileName);
+        //string filePathBallGame = Path.Combine(Application.dataPath, csvBallGameFileName);
+        //string filePathDrawGame = Path.Combine(Application.dataPath, csvDrawGameFileName);
         user = new Dictionary<string, string>();
         patients = new Dictionary<string, PatientData>();
         ReadCSVFileUser(filePathUser);
         ReadCSVFilePatient(filePathPatient,filePathBallGame,filePathDrawGame);
-        Debug.Log(Application.persistentDataPath);
+        Debug.Log(Application.dataPath);
 
     }
 
@@ -144,5 +153,25 @@ public class Database : MonoBehaviour
             return patients[id].getName();
         }
         return null;
+    }
+
+    public void AddUser(string username, string password)
+    {
+        string[] data = { username, password };
+        try
+        {
+            using (StreamWriter sw = new StreamWriter(filePathUser, true))
+            {
+                string line = string.Join(",", data);
+
+                sw.WriteLine(line);
+            }
+            ReadCSVFileUser(filePathUser);
+
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex);
+        }
     }
 }

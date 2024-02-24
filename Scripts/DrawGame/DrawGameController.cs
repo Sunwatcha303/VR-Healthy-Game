@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using Random = UnityEngine.Random;
 using TMPro;
-using UnityEngine.SceneManagement;
 public class DrawGameController : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -65,7 +64,7 @@ public class DrawGameController : MonoBehaviour
             accurate = calculateAccurateSquare(lineRenderer);
             pic = 1;
         }
-        else
+        else if (triangleCheck)
         {
             accurate = calculateAccurateTriangle(lineRenderer);
             pic = 2;

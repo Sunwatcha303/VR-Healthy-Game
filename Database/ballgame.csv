@@ -1,0 +1,5 @@
+id,name,mode,scoreLeft,scoreRight,time,amount,isLeft,isRight,dist
+0001,Jack,set,0,0,0.01674843,0,True,True,near
+0001,Jack,set,0,0,0.01664925,0,True,True,near
+0001,Jack,set,0,0,0.05456543,0,True,True,near
+0001,Jack,random,0,0,15,0,True,True,near
