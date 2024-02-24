@@ -22,6 +22,8 @@ public class MainMenuController : MonoBehaviour
         {
             // Debug.Log("test");
             spawnBall.DestroyBall();
+            spawnBall.SetFreeMode(false);
+            spawnBall.setQSystem(false);
             controller.setFinish();
             mainMenu.SetActive(true);
             setModeMenu.SetActive(true);
