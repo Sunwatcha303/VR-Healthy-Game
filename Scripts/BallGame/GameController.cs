@@ -9,9 +9,11 @@ public class GameController : MonoBehaviour
 
 {
     bool isStart = false;
+    public GameObject player;
     public GameObject mainCamera;
     public GameObject mainMenu, endGameMenu;
     public GameObject playScene;
+    public GameObject boardFreeMode;
     public GameObject setTimer;
     public GameObject timeText;
     public TextMesh scoreLH, scoreRH, timeLB;
@@ -52,6 +54,8 @@ public class GameController : MonoBehaviour
         {
             setEndGame();
         }
+
+        player.transform.position = new Vector3(0.0f, 1.0f, 0.0f);
 
     }
     public void setStart()
@@ -122,6 +126,8 @@ public class GameController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        spawnBall.setQSystem(false);
     }
 
     public void setFinish()
@@ -129,6 +135,7 @@ public class GameController : MonoBehaviour
         isStart = false;
 
         playScene.SetActive(false);
+        boardFreeMode.SetActive(false);
 
         score = 0;
         scoreLeft = 0;
@@ -156,5 +163,11 @@ public class GameController : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void SetCursorFreeMode()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }

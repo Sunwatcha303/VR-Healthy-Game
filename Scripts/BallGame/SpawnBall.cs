@@ -7,8 +7,11 @@ public class SpawnBall : MonoBehaviour
 {
     public GameObject BallForLeft;
     public GameObject BallForRight;
+
     public bool ready = true;
     public bool isQSystem = false;
+    bool freeMode = false;
+
     float spawnTime = 0.0f;
     public bool isNear = true;
     public bool isNormal = false;
@@ -16,7 +19,8 @@ public class SpawnBall : MonoBehaviour
     float posZ = 0;
     public GameObject posPlayer;
     public GameObject[] table;
-    public Queue<SelectBallLocation> q;
+    public FieldFreeMode[] boardFreeMode;
+    public Queue<SelectBallLocation> q = new Queue<SelectBallLocation>();
     List<GameObject> listBallInstance = new List<GameObject>();
     System.Random random = new System.Random();
     int count = 0;
@@ -33,7 +37,7 @@ public class SpawnBall : MonoBehaviour
     }
     void Update()
     {
-        if (!isQSystem && q.Count == 0 && listBallInstance.Count == 0)
+        if (!freeMode && !isQSystem && q.Count == 0 && listBallInstance.Count == 0)
         {
             EndGame();
         }
@@ -143,6 +147,8 @@ public class SpawnBall : MonoBehaviour
     public void EndGame()
     {
         gameController.setEndGame();
+        setQSystem(false);
+        SetFreeMode(false);
     }
     public void setReady()
     {
@@ -267,6 +273,63 @@ public class SpawnBall : MonoBehaviour
     public void RemoveBall(GameObject g)
     {
         listBallInstance.Remove(g);
+    }
+
+    public void SetFreeMode(bool b)
+    {
+        freeMode = b;
+        if (freeMode)
+        {
+            isQSystem = false;
+        }
+    }
+
+    public void SpawballFreeMode(int i)
+    {
+        GameObject temp;
+        if (isOneHand)
+        {
+            if (isLeftHand)
+            {
+                temp = (GameObject)Instantiate(BallForLeft);
+                listBallInstance.Add(temp);
+            }
+            else
+            {
+                temp = (GameObject)Instantiate(BallForRight);
+                listBallInstance.Add(temp);
+            }
+        }
+        else
+        {
+            if (random.Next(0, 2) == 1)
+            {
+                temp = (GameObject)Instantiate(BallForLeft);
+                listBallInstance.Add(temp);
+            }
+            else
+            {
+                temp = (GameObject)Instantiate(BallForRight);
+                listBallInstance.Add(temp);
+            }
+        }
+        float posZ = 0;
+        if (isNear)
+        {
+            posZ = 0.3f;
+        }
+        else if (isNormal)
+        {
+            posZ = 0.5f;
+        }
+        else
+        {
+            posZ = 0.7f;
+        }
+
+        Debug.Log(posZ);
+
+        temp.transform.position = new Vector3(boardFreeMode[i].positionX, boardFreeMode[i].positionY, posZ);
     }
 }
 
