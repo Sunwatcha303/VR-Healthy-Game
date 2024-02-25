@@ -21,7 +21,7 @@ public class Pointer : MonoBehaviour
         linePointer.enabled = (OVRInput.GetActiveController() == OVRInput.Controller.Touch);
         Ray ray = new Ray(rayTransform.position, rayTransform.forward);
         linePointer.SetPosition(0, ray.origin);
-        if (CalculateEnd().HasValue)
+        if (CalculateEnd() != null)
         {
             linePointer.SetPosition(1, CalculateEnd().Value);
         }

@@ -6,16 +6,12 @@ using TMPro;
 
 public class SelectDistance : MonoBehaviour
 {
-    TMP_Dropdown dropdown; // Reference to your Dropdown UI element.
+    public TMP_Dropdown dropdown; // Reference to your Dropdown UI element.
     public SpawnBall spawn;
     private void Start()
     {
-        // Subscribe to the Dropdown's OnValueChanged event.
-        dropdown = GetComponent<TMP_Dropdown>();
-        if(dropdown == null){
-            Debug.Log("test");
-        }
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
+        spawn.setPosZ("near");
     }
 
     // Update is called once per frame
@@ -30,5 +26,10 @@ public class SelectDistance : MonoBehaviour
         string selectedValue = dropdown.options[newValue].text;
         Debug.Log(selectedValue);
         spawn.setPosZ(selectedValue);
+    }
+
+    public void SetDropdownToDefault()
+    {
+        dropdown.value = 0; // Set to the index of the default item
     }
 }

@@ -18,9 +18,9 @@ public class DrawGameController : MonoBehaviour
     public int time = 0;
     public GameObject finishScene;
     public GameObject playScene;
-    public GameObject Camera;
     public Line line;
     public LoggingDrawGame logging;
+    public GameObject selectMenu;
     float timer;
     private bool circleCheck = false, squareCheck = false, triangleCheck = false;
 
@@ -71,8 +71,8 @@ public class DrawGameController : MonoBehaviour
         }
         AccurateText.GetComponent<TextMeshProUGUI>().text = (accurate * 100).ToString("F2") + "%";
         timeText.GetComponent<TextMeshProUGUI>().text = "Time: " + String.Format("{0:0.00}", timer);
+        selectMenu.SetActive(false);
         finishScene.SetActive(true);
-        Camera.SetActive(false);
         logging.SaveToLog(pic, accurate*100, timer);
     }
 
