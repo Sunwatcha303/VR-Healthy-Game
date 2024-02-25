@@ -91,6 +91,7 @@ public class GameController : MonoBehaviour
     {
         isStart = false;
 
+        boardFreeMode.SetActive(false);
         playScene.SetActive(false);
 
         mainCamera.SetActive(false);
@@ -128,6 +129,8 @@ public class GameController : MonoBehaviour
         Cursor.visible = true;
 
         spawnBall.setQSystem(false);
+        spawnBall.SetFreeMode(false);
+        spawnBall.setPosZ("near");
     }
 
     public void setFinish()

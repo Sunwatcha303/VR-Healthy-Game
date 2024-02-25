@@ -10,6 +10,7 @@ public class MainMenuController : MonoBehaviour
     public GameObject mainCamera;
     public GameController controller;
     public SpawnBall spawnBall;
+    public SelectDistance selectDistanceSETmode;
     void Start()
     {
 
@@ -21,13 +22,22 @@ public class MainMenuController : MonoBehaviour
         if (controller.getStart() && Input.GetKeyDown(KeyCode.P))
         {
             // Debug.Log("test");
-            spawnBall.DestroyBall();
-            spawnBall.SetFreeMode(false);
-            spawnBall.setQSystem(false);
-            controller.setFinish();
-            mainMenu.SetActive(true);
-            setModeMenu.SetActive(true);
-            mainCamera.SetActive(false);
+            resetMenu();
         }
+    }
+
+    public void resetMenu()
+    {
+        spawnBall.DestroyBall();
+        spawnBall.SetFreeMode(false);
+        spawnBall.setQSystem(false);
+        spawnBall.setPosZ("near");
+
+        selectDistanceSETmode.SetDropdownToDefault();
+
+        controller.setFinish();
+        mainMenu.SetActive(true);
+        setModeMenu.SetActive(true);
+        mainCamera.SetActive(false);
     }
 }

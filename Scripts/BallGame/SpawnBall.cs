@@ -13,9 +13,9 @@ public class SpawnBall : MonoBehaviour
     bool freeMode = false;
 
     float spawnTime = 0.0f;
-    public bool isNear = true;
-    public bool isNormal = false;
-    public bool isFar = false;
+    public bool isNear;
+    public bool isNormal;
+    public bool isFar;
     float posZ = 0;
     public GameObject posPlayer;
     public GameObject[] table;
@@ -33,7 +33,7 @@ public class SpawnBall : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        isNear = true;
+
     }
     void Update()
     {
@@ -133,7 +133,7 @@ public class SpawnBall : MonoBehaviour
                     {
                         posZ = 0.7f;
                     }
-                    Debug.Log(posZ);
+                    Debug.Log(posZ +" "+ isFar + isNormal + isNear);
                     Vector3 spawnPosition = new Vector3(selection.getX(), selection.getY(), posZ);
                     temp.transform.position = spawnPosition;
                 }
@@ -191,6 +191,7 @@ public class SpawnBall : MonoBehaviour
                 isNormal = false;
                 break;
         }
+        Debug.Log(str + isFar + isNormal + isNear);
     }
 
     public bool getQSystem()
@@ -313,7 +314,6 @@ public class SpawnBall : MonoBehaviour
                 listBallInstance.Add(temp);
             }
         }
-        float posZ = 0;
         if (isNear)
         {
             posZ = 0.3f;
