@@ -94,7 +94,7 @@ public class GameController : MonoBehaviour
         boardFreeMode.SetActive(false);
         playScene.SetActive(false);
 
-        mainCamera.SetActive(false);
+        //mainCamera.SetActive(false);
         mainMenu.SetActive(true);
         endGameMenu.SetActive(true);
         totalScore.text = "Total Score: " + (scoreLeft+scoreRight);

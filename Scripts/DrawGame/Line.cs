@@ -66,7 +66,7 @@ public class Line : MonoBehaviour
                     prePos = curPos;
                 }
 
-                if (lineRenderer.positionCount > 10 && Vector3.Distance(startPos, curPos) < 0.05f)
+                if (lineRenderer.positionCount > 100 && Vector3.Distance(startPos, curPos) < 0.1)
                 {
                     lineRenderer.loop = true;
                     EndGame();
@@ -94,4 +94,5 @@ public class Line : MonoBehaviour
     {
         lineRenderer.loop = b;
     }
+    
 }

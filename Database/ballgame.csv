@@ -5,3 +5,12 @@ id,name,mode,scoreLeft,scoreRight,time,amount,isLeft,isRight,dist
 0001,Jack,random,0,0,15,0,True,True,near
 0001,Jack,set,0,0,0.02693176,0,True,True,near
 0001,Jack,set,0,0,3.05846,0,True,True,near
+0001,Jack,set,8,13,50.81714,21,True,True,normal
+0001,Jack,set,5,4,27.45372,9,True,True,far
+0001,Jack,set,0,0,2.134516,0,True,True,near
+0001,Jack,set,0,0,2.074458,0,True,True,near
+0001,Jack,set,0,0,4.803926,0,True,True,near
+0001,Jack,set,0,0,28.98757,0,True,True,near
+0001,Jack,set,3,7,41.4566,10,True,True,far
+0001,Jack,set,0,0,1.531639,0,True,True,near
+0001,Jack,set,4,5,30.97853,9,True,True,far
