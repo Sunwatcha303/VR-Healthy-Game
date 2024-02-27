@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.172768, g: 0.21589169, b: 0.29782546, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589245, b: 0.2978263, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -655,7 +655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionX: -0.325
-  positionY: 0.675
+  positionY: 1.175
 --- !u!1 &40183346
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,7 +2063,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &170755792
 AudioListener:
   m_ObjectHideFlags: 0
@@ -3859,7 +3859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &268063719
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5580,6 +5580,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1687029535}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &424653253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5862,7 +5874,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionX: 0
-  positionY: 1.325
+  positionY: 1.825
 --- !u!1 &440042534
 GameObject:
   m_ObjectHideFlags: 0
@@ -9778,7 +9790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionX: 0
-  positionY: 1
+  positionY: 1.5
 --- !u!4 &711909747 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 481164, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
@@ -11759,7 +11771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionX: 0.325
-  positionY: 1
+  positionY: 1.5
 --- !u!1 &860782858
 GameObject:
   m_ObjectHideFlags: 0
@@ -13397,7 +13409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionX: 0
-  positionY: 0.675
+  positionY: 1.175
 --- !u!1 &953157100
 GameObject:
   m_ObjectHideFlags: 0
@@ -15465,7 +15477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionX: -0.325
-  positionY: 1
+  positionY: 1.5
 --- !u!1 &1114792079
 GameObject:
   m_ObjectHideFlags: 0
@@ -17520,7 +17532,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 44077032}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -18185,7 +18197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionX: 0.325
-  positionY: 0.675
+  positionY: 1.175
 --- !u!1 &1250163591
 GameObject:
   m_ObjectHideFlags: 0
@@ -19550,7 +19562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionX: -0.325
-  positionY: 1.325
+  positionY: 1.825
 --- !u!1 &1412998967
 GameObject:
   m_ObjectHideFlags: 0
@@ -21651,7 +21663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionX: 0.325
-  positionY: 1.325
+  positionY: 1.825
 --- !u!1 &1567675327
 GameObject:
   m_ObjectHideFlags: 0
@@ -22720,9 +22732,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2015248, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: m_TargetDisplay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2015248, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 8400000, guid: 283d9de2287d56447b26a515f0b30fff, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: _trackingOriginType
       value: 0
