@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using System.Xml;
+using System.Linq;
 
 public class Database : MonoBehaviour
 {
@@ -67,6 +69,7 @@ public class Database : MonoBehaviour
         {
             // Read the CSV file
             string[] lines = File.ReadAllLines(filePath);
+            lines = lines.Skip(1).ToArray();
             foreach (string line in lines)
             {
                 // Process each line as needed
@@ -90,6 +93,7 @@ public class Database : MonoBehaviour
         if (File.Exists(filePathBallGame))
         {
             string[] linesBall = File.ReadAllLines(filePathBallGame);
+            linesBall = linesBall.Skip(1).ToArray();
             foreach (string line in linesBall)
             {
                 string[] input = line.Split(",");
@@ -112,6 +116,7 @@ public class Database : MonoBehaviour
         if (File.Exists(filePathDrawGame))
         {
             string[] linesBall = File.ReadAllLines(filePathDrawGame);
+            linesBall = linesBall.Skip(1).ToArray();
             foreach (string line in linesBall)
             {
                 string[] input = line.Split(",");
@@ -173,5 +178,50 @@ public class Database : MonoBehaviour
         {
             Debug.Log(ex);
         }
+    }
+
+    public void AddPatient(string name)
+    {
+        int id = patients.Count;
+        string[] data = {""+(id+1), name};
+        try
+        {
+            using (StreamWriter sw = new StreamWriter(filePathPatient, true))
+            {
+                string line = string.Join(",", data);
+
+                sw.WriteLine(line);
+            }
+            ReadCSVFilePatient(filePathPatient, filePathBallGame, filePathDrawGame);
+
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex);
+        }
+    }
+
+    public string GetNameByIdOrName(string name)
+    {
+        foreach(var p in patients)
+        {
+            if (p.Value.getName().Equals(name))
+            {
+                return p.Value.getName();
+            }
+        }
+        return null;
+    }
+
+    internal string GetIdByName(string name)
+    {
+        foreach (var p in patients)
+        {
+            if (p.Value.getName().Equals(name))
+            {
+                return p.Key;
+            }
+        }
+        return null;
     }
 }

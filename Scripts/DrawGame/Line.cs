@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using OVRSimpleJSON;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Toggle = UnityEngine.UI.Toggle;
 
 public class Line : MonoBehaviour
 {
@@ -17,6 +21,11 @@ public class Line : MonoBehaviour
     private Vector3 startPos;
     public float minDistance = 0.001f;
 
+    public bool isLeft;
+    public bool isRight;
+
+    public GameObject toggleLeft;
+    public GameObject toggleRight;
     public DrawGameController gameController;
     void Start()
     {
@@ -24,12 +33,17 @@ public class Line : MonoBehaviour
         prePosR = pointerVisualizerR.linePointer.GetPosition(1);
         prePosL = pointerVisualizerL.linePointer.GetPosition(1);
         lineRenderer.positionCount = 0;
+
+        toggleRight.GetComponent<Toggle>().isOn = true;
+        toggleLeft.GetComponent<Toggle>().isOn = false;
+        isRight = true;
+        isLeft = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameController.getStart() && OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
+        if (gameController.getStart() && isRight)
         {
             isDrawing = true;
             prePos = pointerVisualizerR.linePointer.GetPosition(1);
@@ -37,7 +51,7 @@ public class Line : MonoBehaviour
             currentHand = pointerVisualizerR;
             startPos = prePos;
         }
-        if (gameController.getStart() && OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        if (gameController.getStart() && isLeft)
         {
             isDrawing = true;
             prePos = pointerVisualizerL.linePointer.GetPosition(1);
@@ -45,17 +59,9 @@ public class Line : MonoBehaviour
             currentHand = pointerVisualizerL;
             startPos = prePos;
         }
-        if (gameController.getStart() && OVRInput.GetUp(OVRInput.Button.SecondaryIndexTrigger))
-        {
-            isDrawing = false;
-        }
-        if (gameController.getStart() && OVRInput.GetUp(OVRInput.Button.PrimaryIndexTrigger))
-        {
-            isDrawing = false;
-        }
         if (isDrawing)
         {
-            if (currentHand.linePointer.positionCount > 0)
+            if (currentHand.CalculateEnd().HasValue && currentHand.linePointer.positionCount > 0)
             {
                 Vector3 curPos = currentHand.linePointer.GetPosition(1);
 
@@ -72,9 +78,10 @@ public class Line : MonoBehaviour
                     EndGame();
                 }
             }
-            else
+            if(!currentHand.CalculateEnd().HasValue)
             {
                 isDrawing = false;
+                EndGame();
             }
         }
     }
@@ -82,6 +89,10 @@ public class Line : MonoBehaviour
     void EndGame()
     {
         isDrawing = false;
+        toggleRight.GetComponent<Toggle>().isOn = true;
+        toggleLeft.GetComponent<Toggle>().isOn = false;
+        isRight = true;
+        isLeft = false;
         gameController.SetFinishGame(lineRenderer);
     }
 
@@ -94,5 +105,17 @@ public class Line : MonoBehaviour
     {
         lineRenderer.loop = b;
     }
-    
+    void Toggle1Changed()
+    {
+        toggleRight.GetComponent<Toggle>().isOn = false;
+        Debug.Log("isLeft: " + isLeft + ", isRight: " + isRight);
+    }
+
+    void Toggle2Changed()
+    {
+        toggleLeft.GetComponent<Toggle>().isOn = false;
+        Debug.Log("isLeft: " + isLeft + ", isRight: " + isRight);
+    }
+
+
 }

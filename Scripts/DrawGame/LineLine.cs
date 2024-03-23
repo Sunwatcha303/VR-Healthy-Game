@@ -24,7 +24,7 @@ public class LineLine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameController.getStart() && Input.GetMouseButtonDown(0))
+        if (gameController.getStart() && !isDrawing)
         {
             if (getMousePosition().HasValue)
             {
@@ -33,9 +33,10 @@ public class LineLine : MonoBehaviour
                 startPos = getMousePosition().Value;
             }
         }
-        if (gameController.getStart() && Input.GetMouseButtonUp(0))
+        if (gameController.getStart() && isDrawing && !getMousePosition().HasValue)
         {
             isDrawing = false;
+            EndGame();
         }
         if (isDrawing)
         {
@@ -54,11 +55,6 @@ public class LineLine : MonoBehaviour
                     EndGame();
                 }
             }
-            else
-            {
-                isDrawing = false;
-            }
-
         }
 
     }
@@ -79,13 +75,16 @@ public class LineLine : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.CompareTag("Board"))
+            //Debug.Log(hit.point);
+            if (hit.collider.CompareTag("ToDraw"))
             {
                 Vector3 hitPosition = hit.point;
                 hitPosition.z -= 0.1f;
                 return hitPosition;
             }
         }
+
+        //Debug.Log(hit.point);
         return null;
     }
 

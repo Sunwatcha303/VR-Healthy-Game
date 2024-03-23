@@ -26,22 +26,18 @@ public class LobbyController : MonoBehaviour
     {
         btnBallGame.GetComponent<Button>().onClick.AddListener(LoadSceneBallGame);
         btnDrawGame.GetComponent<Button>().onClick.AddListener(LoadSceneDrawGame);
-        if (PlayerPrefs.GetInt("IsLoggedIn", 0) == 0)
+        loginScene.SetActive(false);
+        //PlayerPrefs.DeleteKey("currentName");
+        //PlayerPrefs.DeleteKey("currentId");
+        if (PlayerPrefs.GetString("currentName","0") == "0")
         {
-            loginScene.SetActive(true);
-            selectScene.SetActive(false);
+            menuScene.SetActive(false);
+            selectScene.SetActive(true);
         }
         else
         {
-            loginScene.SetActive(false);
-            if(PlayerPrefs.GetString("currentId","0") == "0")
-            {
-                selectScene.SetActive(true);
-            }
-            else
-            {
-                menuScene.SetActive(true);
-            }
+            selectScene.SetActive(false);
+            menuScene.SetActive(true);
         }
     }
 
@@ -138,13 +134,18 @@ public class LobbyController : MonoBehaviour
     }
     public void SelectPatient()
     {
-        string id = idInput.text;
-        if(database.GetNameById(id) != null)
+        string name = idInput.text;
+        if (name != "")
         {
+            Debug.Log(database.GetNameByIdOrName(name));
+            if(database.GetNameByIdOrName(name) == null)
+            {
+                database.AddPatient(name);
+            }
             selectScene.SetActive(false);
             menuScene.SetActive(true);
-            PlayerPrefs.SetString("currentId", id);
-            PlayerPrefs.SetString("currentName", database.GetNameById(id));
+            PlayerPrefs.SetString("currentName", name);
+            PlayerPrefs.SetString("currentId", database.GetIdByName(name));
             PlayerPrefs.Save();
             idInput.text = "";
         }

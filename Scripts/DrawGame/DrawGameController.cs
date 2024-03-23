@@ -24,6 +24,9 @@ public class DrawGameController : MonoBehaviour
     float timer;
     private bool circleCheck = false, squareCheck = false, triangleCheck = false;
 
+    public DrawObjOnBoard circle;
+    public DrawObjOnBoard square;
+    public DrawObjOnBoard tri;
     void Start()
     {
         PlayerPrefs.SetFloat("nextClick", Time.time);
@@ -69,8 +72,8 @@ public class DrawGameController : MonoBehaviour
             accurate = calculateAccurateTriangle(lineRenderer);
             pic = 2;
         }
-        AccurateText.GetComponent<TextMeshProUGUI>().text = (accurate * 100).ToString("F2") + "%";
-        timeText.GetComponent<TextMeshProUGUI>().text = "Time: " + String.Format("{0:0.00}", timer);
+        //AccurateText.GetComponent<TextMeshProUGUI>().text = (accurate * 100).ToString("F2") + "%";
+        timeText.GetComponent<TextMeshProUGUI>().text = "Time: " + String.Format("{0:0.00}", timer) + " sec";
         selectMenu.SetActive(false);
         finishScene.SetActive(true);
         logging.SaveToLog(pic, accurate*100, timer);
@@ -78,7 +81,8 @@ public class DrawGameController : MonoBehaviour
 
     private float calculateAccurateSquare(LineRenderer lineRenderer)
     {
-        float leftIn = -0.945f, leftOut = -1.25f, rightIn = 0.945f, rightOut = 1.25f, topIn = 2.45f, topOut = 2.75f, bottomIn = 0.55f, bottomOut = 0.25f;
+        //float leftIn = -0.945f, leftOut = -1.25f, rightIn = 0.945f, rightOut = 1.25f, topIn = 2.45f, topOut = 2.75f, bottomIn = 0.55f, bottomOut = 0.25f;
+        float leftIn = -square.polygonRadius, leftOut = -square.centerRadius, rightIn = 0.945f, rightOut = 1.25f, topIn = 2.45f, topOut = 2.75f, bottomIn = 0.55f, bottomOut = 0.25f;
         int count = 0;
         Vector3[] positions = new Vector3[lineRenderer.positionCount];
         lineRenderer.GetPositions(positions);
@@ -181,14 +185,16 @@ public class DrawGameController : MonoBehaviour
 
     public float calculateAccurateCircle(LineRenderer lineRenderer)
     {
-        float radiusIn = 1.225f/2, radiusOut = 1.885f/2, width = 0.04303265f;
+        //float radiusIn = 1.225f/2, radiusOut = 1.885f/2, width = 0.04303265f;
+        float radiusIn = circle.polygonRadius, radiusOut = circle.centerRadius;
         int count = 0;
         Vector3[] positions = new Vector3[lineRenderer.positionCount];
         lineRenderer.GetPositions(positions);
+        Debug.Log(radiusIn+" "+radiusOut);
         foreach (Vector3 position in positions)
         {
-            float dist = Vector3.Distance(position, center.transform.position);
-            if (dist >= (radiusIn + width) && dist <= (radiusOut - width))
+            float dist = Vector3.Distance(position, new Vector3(0,2,2));
+            if (dist >= (radiusIn) && dist <= (radiusOut))
             {
                 count++;
             }

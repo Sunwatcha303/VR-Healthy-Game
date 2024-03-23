@@ -32,11 +32,11 @@ public class Pointer : MonoBehaviour
         return rayTransform.position + (rayTransform.forward * rayDrawDistance);
     }
 
-    private Vector3? CalculateEnd()
+    public Vector3? CalculateEnd()
     {
         RaycastHit hit = CreateForwardRayCast();
 
-        if (hit.collider.CompareTag("Board"))
+        if (hit.collider.CompareTag("ToDraw"))
         {
             Vector3 endPos = hit.point;
             endPos.z -= 0.1f;

@@ -14,3 +14,4 @@ id,name,mode,scoreLeft,scoreRight,time,amount,isLeft,isRight,dist
 0001,Jack,set,3,7,41.4566,10,True,True,far
 0001,Jack,set,0,0,1.531639,0,True,True,near
 0001,Jack,set,4,5,30.97853,9,True,True,far
+3,god,set,0,0,7.290572,0,True,True,near
