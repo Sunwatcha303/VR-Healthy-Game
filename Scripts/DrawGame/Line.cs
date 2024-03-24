@@ -31,6 +31,7 @@ public class Line : MonoBehaviour
     public GameObject rightHand;
 
     public DrawGameController gameController;
+    public AlertMessage alertMessage;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -50,7 +51,7 @@ public class Line : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(gameController.getStart() + " isdrawing " + isDrawing);
+        //Debug.Log(gameController.getStart() + " isdrawing " + isDrawing);
         if (gameController.getStart() && isRight && !isDrawing && pointerVisualizerR.Candraw())
         {
             isDrawing = true;
@@ -67,14 +68,14 @@ public class Line : MonoBehaviour
             currentHand = pointerVisualizerL;
             startPos = prePos;
         }
-        if (gameController.getStart() && isDrawing)
+        /*if (gameController.getStart() && isDrawing)
         {
             if (!currentHand.Candraw())
             {
                 isDrawing = false;
                 EndGame();
             }
-        }
+        }*/
 
         if (isDrawing)
         {
@@ -94,11 +95,16 @@ public class Line : MonoBehaviour
                 {
  
                     lineRenderer.loop = true;
+                    Debug.Log("EndGame: Finish");
+                    alertMessage.ShowAlert("EndGame() It loop", 3);
                     EndGame();
                 }
             }
             else if (!currentHand.Candraw())
             {
+                Debug.Log("EndGame() Out of area");
+                alertMessage.ShowAlert("EndGame() Can'tt draw", 3);
+
                 EndGame();
             }
         }

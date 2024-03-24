@@ -41,7 +41,8 @@ public class SpawnBall : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-
+        isLeftHand = true;
+        isRightHand = true;
     }
     void Update()
     {
@@ -70,7 +71,7 @@ public class SpawnBall : MonoBehaviour
                 }
                 else
                 {
-                    if (random.Next(0, 2) == 1)
+                    if (random.Next(0, 2) == 0)
                     {
                         temp = (GameObject)Instantiate(BallForLeft);
                         listBallInstance.Add(temp);

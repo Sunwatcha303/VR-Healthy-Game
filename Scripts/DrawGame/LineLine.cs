@@ -35,14 +35,14 @@ public class LineLine : MonoBehaviour
         }
         if (gameController.getStart() && isDrawing && !getMousePosition().HasValue)
         {
-            isDrawing = false;
-            EndGame();
+            //isDrawing = false;
+            //EndGame();
         }
         if (isDrawing)
         {
             if (getMousePosition().HasValue)
             {
-                Vector3 curPos = getMousePosition().Value;
+                /*Vector3 curPos = getMousePosition().Value;
                 if (Vector3.Distance(curPos, prePos) > minDistance)
                 {
                     lineRenderer.positionCount++;
@@ -53,7 +53,7 @@ public class LineLine : MonoBehaviour
                 {
                     lineRenderer.loop = true;
                     EndGame();
-                }
+                }*/
             }
         }
 

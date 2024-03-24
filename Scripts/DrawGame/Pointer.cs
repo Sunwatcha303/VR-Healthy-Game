@@ -54,12 +54,11 @@ public class Pointer : MonoBehaviour
     public bool Candraw()
     {
         RaycastHit hit = CreateForwardRayCast();
-
         if (hit.collider != null && hit.collider.CompareTag("ToDraw"))
         {
             return true;
         }
-
+        Debug.Log(hit.point);
         return false;
     }
 }
