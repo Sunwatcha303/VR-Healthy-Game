@@ -54,7 +54,7 @@ public class Line : MonoBehaviour
         if (gameController.getStart() && isRight && !isDrawing && pointerVisualizerR.Candraw())
         {
             isDrawing = true;
-            prePos = pointerVisualizerR.linePointer.GetPosition(0);
+            prePos = pointerVisualizerR.linePointer.GetPosition(1);
             lineRenderer.positionCount = 0;
             currentHand = pointerVisualizerR;
             startPos = prePos;
@@ -62,7 +62,7 @@ public class Line : MonoBehaviour
         if (gameController.getStart() && isLeft && !isDrawing && pointerVisualizerL.Candraw())
         {
             isDrawing = true;
-            prePos = pointerVisualizerL.linePointer.GetPosition(0);
+            prePos = pointerVisualizerL.linePointer.GetPosition(1);
             lineRenderer.positionCount = 0;
             currentHand = pointerVisualizerL;
             startPos = prePos;
@@ -90,7 +90,7 @@ public class Line : MonoBehaviour
                     prePos = curPos;
                 }
 
-                if (lineRenderer.positionCount > 50 && Vector3.Distance(startPos, curPos) < 0.1f)
+                if (lineRenderer.positionCount > 30 && Vector3.Distance(startPos, curPos) < 0.1f)
                 {
  
                     lineRenderer.loop = true;
@@ -115,6 +115,8 @@ public class Line : MonoBehaviour
         toggleLeft.GetComponent<Toggle>().isOn = false;
         isRight = true;
         isLeft = false;
+        rightHand.SetActive(true);
+        leftHand.SetActive(false);
         gameController.SetFinishGame(lineRenderer);
     }
 
