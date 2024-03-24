@@ -46,7 +46,7 @@ public class Line : MonoBehaviour
         if (gameController.getStart() && isRight)
         {
             isDrawing = true;
-            prePos = pointerVisualizerR.linePointer.GetPosition(1);
+            prePos = pointerVisualizerR.linePointer.GetPosition(0);
             lineRenderer.positionCount = 0;
             currentHand = pointerVisualizerR;
             startPos = prePos;
@@ -54,7 +54,7 @@ public class Line : MonoBehaviour
         if (gameController.getStart() && isLeft)
         {
             isDrawing = true;
-            prePos = pointerVisualizerL.linePointer.GetPosition(1);
+            prePos = pointerVisualizerL.linePointer.GetPosition(0);
             lineRenderer.positionCount = 0;
             currentHand = pointerVisualizerL;
             startPos = prePos;
@@ -74,6 +74,7 @@ public class Line : MonoBehaviour
 
                 if (lineRenderer.positionCount > 100 && Vector3.Distance(startPos, curPos) < 0.1)
                 {
+                    lineRenderer.GetPosition(0);
                     lineRenderer.loop = true;
                     EndGame();
                 }

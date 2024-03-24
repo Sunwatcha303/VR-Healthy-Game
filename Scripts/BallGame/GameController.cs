@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
     private int scoreLeft = 0;
     private int scoreRight = 0;
     private int score = 0;
+
     // Start is called before the first frame update
     void Start()
     {
