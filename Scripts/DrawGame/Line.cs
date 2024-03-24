@@ -19,13 +19,17 @@ public class Line : MonoBehaviour
     private Vector3 prePosR;
     private Vector3 prePosL;
     private Vector3 startPos;
-    public float minDistance = 0.001f;
+    public float minDistance = 0.01f;
 
     public bool isLeft;
     public bool isRight;
 
     public GameObject toggleLeft;
     public GameObject toggleRight;
+
+    public GameObject leftHand;
+    public GameObject rightHand;
+
     public DrawGameController gameController;
     void Start()
     {
@@ -38,12 +42,16 @@ public class Line : MonoBehaviour
         toggleLeft.GetComponent<Toggle>().isOn = false;
         isRight = true;
         isLeft = false;
+
+        rightHand.SetActive(true); 
+        leftHand.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameController.getStart() && isRight)
+        Debug.Log(gameController.getStart() + " isdrawing " + isDrawing);
+        if (gameController.getStart() && isRight && !isDrawing && pointerVisualizerR.Candraw())
         {
             isDrawing = true;
             prePos = pointerVisualizerR.linePointer.GetPosition(0);
@@ -51,7 +59,7 @@ public class Line : MonoBehaviour
             currentHand = pointerVisualizerR;
             startPos = prePos;
         }
-        if (gameController.getStart() && isLeft)
+        if (gameController.getStart() && isLeft && !isDrawing && pointerVisualizerL.Candraw())
         {
             isDrawing = true;
             prePos = pointerVisualizerL.linePointer.GetPosition(0);
@@ -59,11 +67,21 @@ public class Line : MonoBehaviour
             currentHand = pointerVisualizerL;
             startPos = prePos;
         }
+        if (gameController.getStart() && isDrawing)
+        {
+            if (!currentHand.Candraw())
+            {
+                isDrawing = false;
+                EndGame();
+            }
+        }
+
         if (isDrawing)
         {
-            if (currentHand.CalculateEnd().HasValue && currentHand.linePointer.positionCount > 0)
+            if (currentHand.Candraw())
             {
                 Vector3 curPos = currentHand.linePointer.GetPosition(1);
+                curPos.z -= 0.01f;
 
                 if (Vector3.Distance(curPos, prePos) > minDistance)
                 {
@@ -72,18 +90,21 @@ public class Line : MonoBehaviour
                     prePos = curPos;
                 }
 
-                if (lineRenderer.positionCount > 100 && Vector3.Distance(startPos, curPos) < 0.1)
+                if (lineRenderer.positionCount > 50 && Vector3.Distance(startPos, curPos) < 0.1f)
                 {
-                    lineRenderer.GetPosition(0);
+ 
                     lineRenderer.loop = true;
                     EndGame();
                 }
             }
-            if(!currentHand.CalculateEnd().HasValue)
+            else if (!currentHand.Candraw())
             {
-                isDrawing = false;
                 EndGame();
             }
+        }
+        if (!gameController.getStart())
+        {
+            isDrawing = false;
         }
     }
 
@@ -106,17 +127,29 @@ public class Line : MonoBehaviour
     {
         lineRenderer.loop = b;
     }
-    void Toggle1Changed()
+    public void ToggleChange2()
     {
-        toggleRight.GetComponent<Toggle>().isOn = false;
+        if (toggleRight.GetComponent<Toggle>().isOn)
+        {
+            toggleLeft.GetComponent<Toggle>().isOn = false; // Turn off left toggle
+            isRight = true;
+            rightHand.SetActive(true);
+            isLeft = false; // Ensure left is off
+            leftHand.SetActive(false); // Turn off left hand if it was on
+        }
         Debug.Log("isLeft: " + isLeft + ", isRight: " + isRight);
     }
-
-    void Toggle2Changed()
+    public void ToggleChange1()
     {
-        toggleLeft.GetComponent<Toggle>().isOn = false;
+        if (toggleLeft.GetComponent<Toggle>().isOn)
+        {
+            toggleRight.GetComponent<Toggle>().isOn = false; // Turn off right toggle
+            isLeft = true;
+            leftHand.SetActive(true);
+            isRight = false; // Ensure right is off
+            rightHand.SetActive(false); // Turn off right hand if it was on
+        }
         Debug.Log("isLeft: " + isLeft + ", isRight: " + isRight);
     }
-
 
 }

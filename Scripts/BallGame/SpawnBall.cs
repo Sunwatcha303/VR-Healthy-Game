@@ -30,7 +30,14 @@ public class SpawnBall : MonoBehaviour
     bool isOneHand = false;
     public GameController gameController;
 
-    public float armLength = 1;
+    public float armLength = 0.67f;
+    //0.67
+    public float farLength = 0.726f;
+    public float normalLength = 0.565f;
+    public float nearLength = 0.4f;
+    //near 0.4
+    //normal 0.565
+    //0.726
     // Update is called once per frame
     void Start()
     {
@@ -76,15 +83,15 @@ public class SpawnBall : MonoBehaviour
                 }
                 if (isNear)
                 {
-                    posZ = 0.3f * armLength;
+                    posZ = nearLength * armLength;
                 }
                 else if (isNormal)
                 {
-                    posZ = 0.5f * armLength;
+                    posZ = normalLength * armLength;
                 }
                 else
                 {
-                    posZ = 0.7f * armLength;
+                    posZ = farLength * armLength;
                 }
                 double posY = random.NextDouble() * (1.75 - 1.25) + 1.25;
                 double posX = random.NextDouble() * (0.75 + 0.75) - 0.75;
@@ -124,15 +131,15 @@ public class SpawnBall : MonoBehaviour
                     }
                     if (isNear)
                     {
-                        posZ = 0.3f * armLength;
+                        posZ = nearLength * armLength;
                     }
                     else if (isNormal)
                     {
-                        posZ = 0.5f * armLength;
+                        posZ = normalLength * armLength;
                     }
                     else
                     {
-                        posZ = 0.7f * armLength;
+                        posZ = farLength * armLength;
                     }
                     Debug.Log(posZ +" "+ isFar + isNormal + isNear);
                     Vector3 spawnPosition = new Vector3(selection.getX(), selection.getY(), posZ);
@@ -317,15 +324,15 @@ public class SpawnBall : MonoBehaviour
         }
         if (isNear)
         {
-            posZ = 0.3f * armLength;
+            posZ = nearLength * armLength;
         }
         else if (isNormal)
         {
-            posZ = 0.5f * armLength;
+            posZ = normalLength * armLength;
         }
         else
         {
-            posZ = 0.7f * armLength;
+            posZ = farLength * armLength;
         }
 
         Debug.Log(posZ);

@@ -38,9 +38,9 @@ public class Logging : MonoBehaviour
 
     public void SaveToLog(string mode, int scoreLeft, int scoreRight, float time, int amount, bool isLeft, bool isRight, string dist)
     {
-        string path = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database" , "ballgame.csv");
+        //string path = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database" , "ballgame.csv");
         //for build
-        //string path = Path.Combine(Application.dataPath, "ballgame.csv");
+        string path = Path.Combine(Application.dataPath, "ballgame.csv");
         Debug.Log(path);
 
         string[] dataToAppend = { PlayerPrefs.GetString("currentId"), PlayerPrefs.GetString("currentName"), "" + mode, "" + scoreLeft, "" + scoreRight, "" + time, "" + amount, "" + isLeft, "" + isRight, dist };

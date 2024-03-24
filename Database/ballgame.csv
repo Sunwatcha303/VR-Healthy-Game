@@ -15,3 +15,14 @@ id,name,mode,scoreLeft,scoreRight,time,amount,isLeft,isRight,dist
 0001,Jack,set,0,0,1.531639,0,True,True,near
 0001,Jack,set,4,5,30.97853,9,True,True,far
 3,god,set,0,0,7.290572,0,True,True,near
+4,gg,set,0,0,14.51228,0,True,True,far
+4,gg,set,0,0,31.9217,0,True,True,far
+4,gg,set,0,0,29.12637,0,False,True,normal
+4,gg,set,0,0,10.58216,0,False,True,near
+4,gg,set,3,2,400.7726,5,True,True,far
+4,gg,set,0,0,23.68672,0,True,True,normal
+4,gg,set,0,0,7.678432,0,True,True,near
+4,gg,set,1,0,85.45614,1,True,True,far
+4,gg,set,5,8,26.1894,13,True,True,normal
+4,gg,random,0,10,30,10,True,True,normal
+4,gg,set,5,7,30.22222,12,True,True,near
