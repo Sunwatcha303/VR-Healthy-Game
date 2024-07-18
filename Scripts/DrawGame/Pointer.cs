@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using System;
 using UnityEngine;
+using Meta.WitAi;
 
 public class Pointer : MonoBehaviour
 {
@@ -14,37 +14,33 @@ public class Pointer : MonoBehaviour
     public LineRenderer linePointer = null;
 
     [Tooltip("Visually, how far out should the ray be drawn.")]
-    public float rayDrawDistance = 2.5f;
+    public float rayDrawDistance = 5f;
 
     void Update()
     {
         linePointer.enabled = (OVRInput.GetActiveController() == OVRInput.Controller.Touch);
         Ray ray = new Ray(rayTransform.position, rayTransform.forward);
         linePointer.SetPosition(0, ray.origin);
-        if (CalculateEnd() != null)
-        {
-            linePointer.SetPosition(1, CalculateEnd().Value);
-        }
+        linePointer.SetPosition(1, CalculateEnd());
     }
-
     private Vector3 DefaultDistance()
     {
         return rayTransform.position + (rayTransform.forward * rayDrawDistance);
     }
 
-    private Vector3? CalculateEnd()
+    public Vector3 CalculateEnd()
     {
         RaycastHit hit = CreateForwardRayCast();
 
-        if (hit.collider.CompareTag("Board"))
+        if (hit.collider != null)
         {
-            Vector3 endPos = hit.point;
-            endPos.z -= 0.1f;
-            return endPos;
+            return hit.point;
         }
 
-        return null;
+        // Return a default position if no collider is hit
+        return DefaultDistance();
     }
+
 
     private RaycastHit CreateForwardRayCast()
     {
@@ -53,5 +49,16 @@ public class Pointer : MonoBehaviour
 
         Physics.Raycast(ray, out hit, rayDrawDistance);
         return hit;
+    }
+
+    public bool Candraw()
+    {
+        RaycastHit hit = CreateForwardRayCast();
+        if (hit.collider != null && hit.collider.CompareTag("ToDraw"))
+        {
+            return true;
+        }
+        Debug.Log(hit.point);
+        return false;
     }
 }

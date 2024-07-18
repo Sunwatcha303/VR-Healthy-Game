@@ -16485,6 +16485,10 @@ MonoBehaviour:
   - {fileID: 941862247}
   - {fileID: 1243769114}
   gameController: {fileID: 1775945829}
+  armLength: 0.67
+  farLength: 0.726
+  normalLength: 0.565
+  nearLength: 0.4
 --- !u!4 &1163271902
 Transform:
   m_ObjectHideFlags: 0
@@ -23955,6 +23959,7 @@ MonoBehaviour:
   mainMenu: {fileID: 1250163591}
   setModeMenu: {fileID: 885440242}
   mainCamera: {fileID: 1324878929}
+  freeMode: {fileID: 1687029535}
   controller: {fileID: 1775945829}
   spawnBall: {fileID: 1163271901}
   selectDistanceSETmode: {fileID: 656358152}

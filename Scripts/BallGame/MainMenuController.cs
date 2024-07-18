@@ -8,6 +8,7 @@ public class MainMenuController : MonoBehaviour
     public GameObject mainMenu;
     public GameObject setModeMenu;
     public GameObject mainCamera;
+    public GameObject freeMode;
     public GameController controller;
     public SpawnBall spawnBall;
     public SelectDistance selectDistanceSETmode;
@@ -35,9 +36,11 @@ public class MainMenuController : MonoBehaviour
 
         selectDistanceSETmode.SetDropdownToDefault();
 
+
         controller.setFinish();
         mainMenu.SetActive(true);
         setModeMenu.SetActive(true);
-        mainCamera.SetActive(false);
+        freeMode.SetActive(false);
+        //mainCamera.SetActive(false);
     }
 }

@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using OVRSimpleJSON;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Toggle = UnityEngine.UI.Toggle;
 
 public class Line : MonoBehaviour
 {
@@ -15,21 +19,40 @@ public class Line : MonoBehaviour
     private Vector3 prePosR;
     private Vector3 prePosL;
     private Vector3 startPos;
-    public float minDistance = 0.001f;
+    public float minDistance = 0.01f;
+
+    public bool isLeft;
+    public bool isRight;
+
+    public GameObject toggleLeft;
+    public GameObject toggleRight;
+
+    public GameObject leftHand;
+    public GameObject rightHand;
 
     public DrawGameController gameController;
+    public AlertMessage alertMessage;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         prePosR = pointerVisualizerR.linePointer.GetPosition(1);
         prePosL = pointerVisualizerL.linePointer.GetPosition(1);
         lineRenderer.positionCount = 0;
+
+        toggleRight.GetComponent<Toggle>().isOn = true;
+        toggleLeft.GetComponent<Toggle>().isOn = false;
+        isRight = true;
+        isLeft = false;
+
+        rightHand.SetActive(true); 
+        leftHand.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameController.getStart() && OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
+        //Debug.Log(gameController.getStart() + " isdrawing " + isDrawing);
+        if (gameController.getStart() && isRight && !isDrawing && pointerVisualizerR.Candraw())
         {
             isDrawing = true;
             prePos = pointerVisualizerR.linePointer.GetPosition(1);
@@ -37,7 +60,7 @@ public class Line : MonoBehaviour
             currentHand = pointerVisualizerR;
             startPos = prePos;
         }
-        if (gameController.getStart() && OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        if (gameController.getStart() && isLeft && !isDrawing && pointerVisualizerL.Candraw())
         {
             isDrawing = true;
             prePos = pointerVisualizerL.linePointer.GetPosition(1);
@@ -45,19 +68,21 @@ public class Line : MonoBehaviour
             currentHand = pointerVisualizerL;
             startPos = prePos;
         }
-        if (gameController.getStart() && OVRInput.GetUp(OVRInput.Button.SecondaryIndexTrigger))
+        /*if (gameController.getStart() && isDrawing)
         {
-            isDrawing = false;
-        }
-        if (gameController.getStart() && OVRInput.GetUp(OVRInput.Button.PrimaryIndexTrigger))
-        {
-            isDrawing = false;
-        }
+            if (!currentHand.Candraw())
+            {
+                isDrawing = false;
+                EndGame();
+            }
+        }*/
+
         if (isDrawing)
         {
-            if (currentHand.linePointer.positionCount > 0)
+            if (currentHand.Candraw())
             {
                 Vector3 curPos = currentHand.linePointer.GetPosition(1);
+                curPos.z -= 0.01f;
 
                 if (Vector3.Distance(curPos, prePos) > minDistance)
                 {
@@ -66,22 +91,38 @@ public class Line : MonoBehaviour
                     prePos = curPos;
                 }
 
-                if (lineRenderer.positionCount > 100 && Vector3.Distance(startPos, curPos) < 0.1)
+                if (lineRenderer.positionCount > 30 && Vector3.Distance(startPos, curPos) < 0.1f)
                 {
+ 
                     lineRenderer.loop = true;
+                    Debug.Log("EndGame: Finish");
+                    alertMessage.ShowAlert("EndGame() It loop", 3);
                     EndGame();
                 }
             }
-            else
+            else if (!currentHand.Candraw())
             {
-                isDrawing = false;
+                Debug.Log("EndGame() Out of area");
+                alertMessage.ShowAlert("EndGame() Can'tt draw", 3);
+
+                EndGame();
             }
+        }
+        if (!gameController.getStart())
+        {
+            isDrawing = false;
         }
     }
 
     void EndGame()
     {
         isDrawing = false;
+        toggleRight.GetComponent<Toggle>().isOn = true;
+        toggleLeft.GetComponent<Toggle>().isOn = false;
+        isRight = true;
+        isLeft = false;
+        rightHand.SetActive(true);
+        leftHand.SetActive(false);
         gameController.SetFinishGame(lineRenderer);
     }
 
@@ -94,5 +135,29 @@ public class Line : MonoBehaviour
     {
         lineRenderer.loop = b;
     }
-    
+    public void ToggleChange2()
+    {
+        if (toggleRight.GetComponent<Toggle>().isOn)
+        {
+            toggleLeft.GetComponent<Toggle>().isOn = false; // Turn off left toggle
+            isRight = true;
+            rightHand.SetActive(true);
+            isLeft = false; // Ensure left is off
+            leftHand.SetActive(false); // Turn off left hand if it was on
+        }
+        Debug.Log("isLeft: " + isLeft + ", isRight: " + isRight);
+    }
+    public void ToggleChange1()
+    {
+        if (toggleLeft.GetComponent<Toggle>().isOn)
+        {
+            toggleRight.GetComponent<Toggle>().isOn = false; // Turn off right toggle
+            isLeft = true;
+            leftHand.SetActive(true);
+            isRight = false; // Ensure right is off
+            rightHand.SetActive(false); // Turn off right hand if it was on
+        }
+        Debug.Log("isLeft: " + isLeft + ", isRight: " + isRight);
+    }
+
 }
