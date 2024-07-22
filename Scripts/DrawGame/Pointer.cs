@@ -58,7 +58,18 @@ public class Pointer : MonoBehaviour
         {
             return true;
         }
-        Debug.Log(hit.point);
+        //Debug.Log(hit.point);
+        return false;
+    }
+
+    public bool IsPointToStart()
+    {
+        RaycastHit hit = CreateForwardRayCast();
+
+        if (hit.collider != null && hit.collider.CompareTag("PointToStart"))
+        {
+            return true;
+        }
         return false;
     }
 }

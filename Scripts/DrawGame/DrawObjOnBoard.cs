@@ -135,4 +135,10 @@ public class DrawObjOnBoard : MonoBehaviour
         center /= polygonPoints.Length;
         return center;
     }
+
+    public void SetSize(float pRaduis, float cRaduis)
+    {
+        polygonRadius = pRaduis;
+        centerRadius = cRaduis;
+    }
 }
