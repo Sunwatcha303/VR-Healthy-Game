@@ -70,6 +70,7 @@ public class Pointer : MonoBehaviour
         {
             return true;
         }
+        Debug.Log(hit.point);
         return false;
     }
 }

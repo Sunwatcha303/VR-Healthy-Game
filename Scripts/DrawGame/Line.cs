@@ -47,33 +47,15 @@ public class Line : MonoBehaviour
 
         rightHand.SetActive(true); 
         leftHand.SetActive(false);
+
+        SetHand();
     }
 
     // Update is called once per frame
     void Update()
     {
         //Debug.Log(gameController.getStart() + " isdrawing " + isDrawing);
-        if (currentHand.IsPointToStart())
-        {
-            gameController.setStart(true);
-            gameController.setActiveCirclePointToStart(false);
-        }
-        if (gameController.getStart() && isRight && !isDrawing && pointerVisualizerR.Candraw())
-        {
-            isDrawing = true;
-            prePos = pointerVisualizerR.linePointer.GetPosition(1);
-            lineRenderer.positionCount = 0;
-            currentHand = pointerVisualizerR;
-            startPos = prePos;
-        }
-        if (gameController.getStart() && isLeft && !isDrawing && pointerVisualizerL.Candraw())
-        {
-            isDrawing = true;
-            prePos = pointerVisualizerL.linePointer.GetPosition(1);
-            lineRenderer.positionCount = 0;
-            currentHand = pointerVisualizerL;
-            startPos = prePos;
-        }
+        
         if (gameController.getStart() && isDrawing && !currentHand.Candraw())
         {
             if (!isOutSide)
@@ -82,6 +64,16 @@ public class Line : MonoBehaviour
                 isOutSide = true;
                 gameController.SetStartTimeOutTheBox(Time.time);
             }
+        }
+        if (!isDrawing && currentHand != null && currentHand.IsPointToStart())
+        {
+            isDrawing = true;
+            gameController.setStart(true);
+            gameController.setActiveCirclePointToStart(false);
+
+            prePos = currentHand.linePointer.GetPosition(1);
+            lineRenderer.positionCount = 0;
+            startPos = prePos;
         }
 
         if (isDrawing)
@@ -104,7 +96,7 @@ public class Line : MonoBehaviour
                     prePos = curPos;
                 }
 
-                if (lineRenderer.positionCount > 30 && Vector3.Distance(startPos, curPos) < 0.1f)
+                if (lineRenderer.positionCount > 50 && Vector3.Distance(startPos, curPos) < 0.5f)
                 {
  
                     lineRenderer.loop = true;
@@ -159,6 +151,7 @@ public class Line : MonoBehaviour
             leftHand.SetActive(false); // Turn off left hand if it was on
         }
         Debug.Log("isLeft: " + isLeft + ", isRight: " + isRight);
+        SetHand();
     }
     public void ToggleChange1()
     {
@@ -171,12 +164,33 @@ public class Line : MonoBehaviour
             rightHand.SetActive(false); // Turn off right hand if it was on
         }
         Debug.Log("isLeft: " + isLeft + ", isRight: " + isRight);
+        SetHand();
     }
 
     public void SetWidthLine(float size)
     {
         lineRenderer.startWidth = size;
         lineRenderer.endWidth = size;
+    }
+
+    public void SetHand()
+    {
+        if (/*gameController.getStart() && */isRight /* && !isDrawing && pointerVisualizerR.Candraw()*/)
+        {
+            //isDrawing = true;
+            //prePos = pointerVisualizerR.linePointer.GetPosition(1);
+            lineRenderer.positionCount = 0;
+            currentHand = pointerVisualizerR;
+            //startPos = prePos;
+        }
+        if (/*gameController.getStart() && */isLeft /*&& !isDrawing && pointerVisualizerL.Candraw()*/)
+        {
+            //isDrawing = true;
+            //prePos = pointerVisualizerL.linePointer.GetPosition(1);
+            lineRenderer.positionCount = 0;
+            currentHand = pointerVisualizerL;
+            //startPos = prePos;
+        }
     }
 
 }
