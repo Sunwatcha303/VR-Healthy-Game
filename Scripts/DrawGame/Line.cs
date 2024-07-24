@@ -14,6 +14,7 @@ public class Line : MonoBehaviour
     public Pointer pointerVisualizerL;
     Pointer currentHand;
     internal LineRenderer lineRenderer;
+    private bool isOutSide = false;
     private bool isDrawing = false;
     private Vector3 prePos;
     private Vector3 prePosR;
@@ -52,6 +53,11 @@ public class Line : MonoBehaviour
     void Update()
     {
         //Debug.Log(gameController.getStart() + " isdrawing " + isDrawing);
+        if (currentHand.IsPointToStart())
+        {
+            gameController.setStart(true);
+            gameController.setActiveCirclePointToStart(false);
+        }
         if (gameController.getStart() && isRight && !isDrawing && pointerVisualizerR.Candraw())
         {
             isDrawing = true;
@@ -68,19 +74,26 @@ public class Line : MonoBehaviour
             currentHand = pointerVisualizerL;
             startPos = prePos;
         }
-        /*if (gameController.getStart() && isDrawing)
+        if (gameController.getStart() && isDrawing && !currentHand.Candraw())
         {
-            if (!currentHand.Candraw())
+            if (!isOutSide)
             {
-                isDrawing = false;
-                EndGame();
+                Debug.Log("Now out side the box");
+                isOutSide = true;
+                gameController.SetStartTimeOutTheBox(Time.time);
             }
-        }*/
+        }
 
         if (isDrawing)
         {
             if (currentHand.Candraw())
             {
+                if (isOutSide)
+                {
+                    Debug.Log("Now in side the box");
+                    isOutSide = false;
+                    gameController.SetEndTimeOutTheBox(Time.time);
+                }
                 Vector3 curPos = currentHand.linePointer.GetPosition(1);
                 curPos.z -= 0.01f;
 
@@ -100,13 +113,13 @@ public class Line : MonoBehaviour
                     EndGame();
                 }
             }
-            else if (!currentHand.Candraw())
+            /*else if (!currentHand.Candraw())
             {
                 Debug.Log("EndGame() Out of area");
-                alertMessage.ShowAlert("EndGame() Can'tt draw", 3);
+                alertMessage.ShowAlert("EndGame() Can't draw", 3);
 
                 EndGame();
-            }
+            }*/
         }
         if (!gameController.getStart())
         {
@@ -158,6 +171,12 @@ public class Line : MonoBehaviour
             rightHand.SetActive(false); // Turn off right hand if it was on
         }
         Debug.Log("isLeft: " + isLeft + ", isRight: " + isRight);
+    }
+
+    public void SetWidthLine(float size)
+    {
+        lineRenderer.startWidth = size;
+        lineRenderer.endWidth = size;
     }
 
 }

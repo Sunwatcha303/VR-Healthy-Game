@@ -7,8 +7,11 @@ using System.Linq;
 public class LineLine : MonoBehaviour
 {
     // Start is called before the first frame update
+    public bool active = false;
+
     internal LineRenderer lineRenderer;
     private bool isDrawing = false;
+    private bool isOutSide = false;
     private Vector3 prePos;
     private Vector3 startPos;
     public float minDistance = 0.001f;
@@ -24,36 +27,56 @@ public class LineLine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameController.getStart() && !isDrawing)
+        if (active)
         {
-            if (getMousePosition().HasValue)
+            if (isPointToStart())
             {
-                isDrawing = true;
-                lineRenderer.positionCount = 0;
-                startPos = getMousePosition().Value;
+                gameController.setStart(true);
+                gameController.setActiveCirclePointToStart(false);
             }
-        }
-        if (gameController.getStart() && isDrawing && !getMousePosition().HasValue)
-        {
-            //isDrawing = false;
-            //EndGame();
-        }
-        if (isDrawing)
-        {
-            if (getMousePosition().HasValue)
+            if (gameController.getStart() && !isDrawing)
             {
-                /*Vector3 curPos = getMousePosition().Value;
-                if (Vector3.Distance(curPos, prePos) > minDistance)
+                if (getMousePosition().HasValue)
                 {
-                    lineRenderer.positionCount++;
-                    lineRenderer.SetPosition(lineRenderer.positionCount - 1, curPos);
-                    prePos = curPos;
+                    isDrawing = true;
+                    lineRenderer.positionCount = 0;
+                    startPos = getMousePosition().Value;
                 }
-                if (lineRenderer.positionCount > 10 && Vector3.Distance(startPos, curPos) < 0.05f)
+            }
+            if (gameController.getStart() && isDrawing && !getMousePosition().HasValue)
+            {
+                //isDrawing = false;
+                //EndGame();
+                if (!isOutSide)
                 {
-                    lineRenderer.loop = true;
-                    EndGame();
-                }*/
+                    Debug.Log("Now out side the box");
+                    isOutSide = true;
+                    gameController.SetStartTimeOutTheBox(Time.time);
+                }
+            }
+            if (isDrawing)
+            {
+                if (getMousePosition().HasValue)
+                {
+                    if (isOutSide)
+                    {
+                        Debug.Log("Now in side the box");
+                        isOutSide = false;
+                        gameController.SetEndTimeOutTheBox(Time.time);
+                    }
+                    Vector3 curPos = getMousePosition().Value;
+                    if (Vector3.Distance(curPos, prePos) > minDistance)
+                    {
+                        lineRenderer.positionCount++;
+                        lineRenderer.SetPosition(lineRenderer.positionCount - 1, curPos);
+                        prePos = curPos;
+                    }
+                    if (lineRenderer.positionCount > 30 && Vector3.Distance(startPos, curPos) < 0.1f)
+                    {
+                        lineRenderer.loop = true;
+                        EndGame();
+                    }
+                }
             }
         }
 
@@ -88,6 +111,22 @@ public class LineLine : MonoBehaviour
         return null;
     }
 
+    private bool isPointToStart()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        Ray ray = c.ScreenPointToRay(mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.CompareTag("PointToStart"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void SetLinePositionCount(int n)
     {
         lineRenderer.positionCount = n;
@@ -98,5 +137,13 @@ public class LineLine : MonoBehaviour
         lineRenderer.loop = b;
     }
 
-
+    public bool GetOutSideTheBox()
+    {
+        return isOutSide;
+    }
+    public void SetWidthLine(float size)
+    {
+        lineRenderer.startWidth = size;
+        lineRenderer.endWidth = size;
+    }
 }
