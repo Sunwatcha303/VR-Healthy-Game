@@ -54,24 +54,29 @@ public class LineLine : MonoBehaviour
                     gameController.SetStartTimeOutTheBox(Time.time);
                 }
             }
-            if (isDrawing)
+            if (isDrawing && gameController.getStart())
             {
                 if (getMousePosition().HasValue)
                 {
-                    if (isOutSide)
+                    
+                    Vector3 curPos = getMousePosition().Value;
+                    float dist = Vector3.Distance(curPos, prePos);
+                    Debug.Log("dist: "+dist);
+                    Debug.Log("prePos: "+prePos);
+                    Debug.Log("curPos: "+curPos);
+                    if (isOutSide && dist < (minDistance + 0.5f))
                     {
                         Debug.Log("Now in side the box");
                         isOutSide = false;
                         gameController.SetEndTimeOutTheBox(Time.time);
                     }
-                    Vector3 curPos = getMousePosition().Value;
-                    if (Vector3.Distance(curPos, prePos) > minDistance)
+                    if (!isOutSide && dist > minDistance)
                     {
                         lineRenderer.positionCount++;
                         lineRenderer.SetPosition(lineRenderer.positionCount - 1, curPos);
                         prePos = curPos;
                     }
-                    if (lineRenderer.positionCount > 30 && Vector3.Distance(startPos, curPos) < 0.1f)
+                    if (!isOutSide && lineRenderer.positionCount > 30 && Vector3.Distance(startPos, curPos) < 0.5f)
                     {
                         lineRenderer.loop = true;
                         EndGame();
@@ -145,5 +150,10 @@ public class LineLine : MonoBehaviour
     {
         lineRenderer.startWidth = size;
         lineRenderer.endWidth = size;
+    }
+
+    public void SetIsOutSide(bool b)
+    {
+        isOutSide = b;
     }
 }

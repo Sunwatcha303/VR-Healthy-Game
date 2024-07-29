@@ -80,23 +80,23 @@ public class Line : MonoBehaviour
         {
             if (currentHand.Candraw())
             {
-                if (isOutSide)
+                Vector3 curPos = currentHand.linePointer.GetPosition(1);
+                curPos.z -= 0.01f;
+                float dist = Vector3.Distance(curPos, prePos);
+                if (isOutSide && dist < minDistance + 0.5f)
                 {
                     Debug.Log("Now in side the box");
                     isOutSide = false;
                     gameController.SetEndTimeOutTheBox(Time.time);
                 }
-                Vector3 curPos = currentHand.linePointer.GetPosition(1);
-                curPos.z -= 0.01f;
-
-                if (Vector3.Distance(curPos, prePos) > minDistance)
+                if (!isOutSide && dist > minDistance)
                 {
                     lineRenderer.positionCount++;
                     lineRenderer.SetPosition(lineRenderer.positionCount - 1, curPos);
                     prePos = curPos;
                 }
 
-                if (lineRenderer.positionCount > 50 && Vector3.Distance(startPos, curPos) < 0.5f)
+                if (!isOutSide && lineRenderer.positionCount > 50 && Vector3.Distance(startPos, curPos) < 0.5f)
                 {
  
                     lineRenderer.loop = true;
@@ -122,12 +122,12 @@ public class Line : MonoBehaviour
     void EndGame()
     {
         isDrawing = false;
-        toggleRight.GetComponent<Toggle>().isOn = true;
-        toggleLeft.GetComponent<Toggle>().isOn = false;
-        isRight = true;
-        isLeft = false;
-        rightHand.SetActive(true);
-        leftHand.SetActive(false);
+        //toggleRight.GetComponent<Toggle>().isOn = true;
+        //toggleLeft.GetComponent<Toggle>().isOn = false;
+        //isRight = true;
+        //isLeft = false;
+        //rightHand.SetActive(true);
+        //leftHand.SetActive(false);
         gameController.SetFinishGame(lineRenderer);
     }
 
@@ -177,7 +177,7 @@ public class Line : MonoBehaviour
     {
         if (/*gameController.getStart() && */isRight /* && !isDrawing && pointerVisualizerR.Candraw()*/)
         {
-            //isDrawing = true;
+            isDrawing = false;
             //prePos = pointerVisualizerR.linePointer.GetPosition(1);
             lineRenderer.positionCount = 0;
             currentHand = pointerVisualizerR;
@@ -185,12 +185,17 @@ public class Line : MonoBehaviour
         }
         if (/*gameController.getStart() && */isLeft /*&& !isDrawing && pointerVisualizerL.Candraw()*/)
         {
-            //isDrawing = true;
+            isDrawing = false;
             //prePos = pointerVisualizerL.linePointer.GetPosition(1);
             lineRenderer.positionCount = 0;
             currentHand = pointerVisualizerL;
             //startPos = prePos;
         }
+    }
+
+    public void SetIsOutSide(bool b)
+    {
+        isOutSide = b;
     }
 
 }
