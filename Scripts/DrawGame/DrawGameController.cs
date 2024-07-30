@@ -21,6 +21,7 @@ public class DrawGameController : MonoBehaviour
     public GameObject playScene;
 
     public GameObject pointToStartObj;
+    public GameObject UIFinished;
 
     public bool isStart = false;
     public int time = 0;
@@ -84,11 +85,13 @@ public class DrawGameController : MonoBehaviour
             pic = 2;
         }
         //AccurateText.GetComponent<TextMeshProUGUI>().text = (accurate * 100).ToString("F2") + "%";
-        timeText.GetComponent<TextMeshProUGUI>().text = "Time: " + String.Format("{0:0.00}", timer) + " sec";
-        timeOutSideText.GetComponent<TextMeshProUGUI>().text = "Time out side the box: " + String.Format("{0:0.00}", timeOutTheBox) + " sec";
+        timeText.GetComponent<TextMeshProUGUI>().text = "Total Time: " + String.Format("{0:0.00}", timer) + " sec";
+        timeOutSideText.GetComponent<TextMeshProUGUI>().text = "Time out side: " + String.Format("{0:0.00}", timeOutTheBox) + " sec";
         selectMenu.SetActive(false);
         finishScene.SetActive(true);
         logging.SaveToLog(pic, accurate*100, timer, timeOutTheBox);
+
+        UIFinished.SetActive(true);
 
         timeOutTheBox = 0;
     }
@@ -165,6 +168,17 @@ public class DrawGameController : MonoBehaviour
     {
         //pointToStartObj.transform.GetChild(0).gameObject.SetActive(false);
         //pointToStartObj.transform.GetChild(1).gameObject.SetActive(false);
-        pointToStartObj.SetActive(false);
+        pointToStartObj.SetActive(v);
+    }
+
+    public void setUIFinished(bool v)
+    {
+        UIFinished.SetActive(v);
+    }
+
+    public void ResetTimeOutTheBox(float i)
+    {
+        timeOutTheBox = i;
+        SetStartTimeOutTheBox(Time.time);
     }
 }
