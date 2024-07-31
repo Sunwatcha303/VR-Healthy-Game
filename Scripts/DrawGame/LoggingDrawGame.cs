@@ -35,14 +35,14 @@ public class LoggingDrawGame : MonoBehaviour
         }
     }
 
-    public void SaveToLog(int picture, double accurate, double time, double timeOutTheBox)
+    public void SaveToLog(int shape, int level, double time, double timeOutTheBox, char hand)
     {
         //string path = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database" ,"drawgame.csv");
         //for build
         string path = Path.Combine(Application.dataPath ,"drawgame.csv");
         Debug.Log(path);
 
-        string[] dataToAppend = { PlayerPrefs.GetString("currentId"), PlayerPrefs.GetString("currentName"), "" + picture, accurate.ToString("F2"), "" + time.ToString("F2"), ""+timeOutTheBox.ToString("F2")};
+        string[] dataToAppend = { PlayerPrefs.GetString("currentId"), "" + shape, "" + level , "" + time.ToString("F2"), ""+timeOutTheBox.ToString("F2"), ""+hand, ""+DateTime.Today.ToString("dd/MM/yyyy") };
 
         AppendToCsv(path, dataToAppend);
     }

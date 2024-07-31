@@ -112,15 +112,19 @@ public class GameController : MonoBehaviour
         }
         spawnBall.DestroyBall();
 
-        loggin.SaveToLog((spawnBall.isQSystem)? "random":"set",
-            scoreLeft,
-            scoreRight,
-            (spawnBall.isQSystem)? time : Mathf.Abs(timer - Time.time),
-            scoreLeft + scoreRight,
-            GetComponent<ModeToPlay>().leftFlag,
-            GetComponent<ModeToPlay>().rightFlag,
-            spawnBall.getDistance()
-        );
+        if (!PlayerPrefs.GetString("currentName").Equals("Guess"))
+        {
+            loggin.SaveToLog(
+                (spawnBall.isQSystem)? "random":"set",
+                scoreLeft,
+                scoreRight,
+                (spawnBall.isQSystem)? time : Mathf.Abs(timer - Time.time),
+                GetComponent<ModeToPlay>().leftFlag,
+                GetComponent<ModeToPlay>().rightFlag,
+                spawnBall.getDistance()
+            );
+        }
+
 
         score = 0;
         scoreLeft = 0;
