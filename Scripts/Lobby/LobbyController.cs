@@ -26,18 +26,34 @@ public class LobbyController : MonoBehaviour
     {
         btnBallGame.GetComponent<Button>().onClick.AddListener(LoadSceneBallGame);
         btnDrawGame.GetComponent<Button>().onClick.AddListener(LoadSceneDrawGame);
-        loginScene.SetActive(false);
+        //loginScene.SetActive(false);
         //PlayerPrefs.DeleteKey("currentName");
         //PlayerPrefs.DeleteKey("currentId");
-        if (PlayerPrefs.GetString("currentName","0") == "0")
+
+        /*if(PlayerPrefs.GetInt("IsLoggedIn",0) == 0)
         {
+            loginScene.SetActive(true);
+            selectScene.SetActive(false);
             menuScene.SetActive(false);
-            selectScene.SetActive(true);
+        }*/
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
+        {
+            if (PlayerPrefs.GetString("currentName", "0") == "0")
+            {
+                menuScene.SetActive(false);
+                selectScene.SetActive(true);
+            }
+            else
+            {
+                selectScene.SetActive(false);
+                menuScene.SetActive(true);
+            }
         }
         else
         {
+            loginScene.SetActive(true);
             selectScene.SetActive(false);
-            menuScene.SetActive(true);
+            menuScene.SetActive(false);
         }
     }
 
@@ -135,7 +151,8 @@ public class LobbyController : MonoBehaviour
     public void SelectPatient()
     {
         string name = idInput.text;
-        if (name != "")
+        //Debug.Log(name);
+        if (!name.Equals(""))
         {
             Debug.Log(database.GetNameByIdOrName(name));
             if(database.GetNameByIdOrName(name) == null)
