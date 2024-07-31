@@ -113,7 +113,7 @@ public class Database : MonoBehaviour
             using (StreamWriter sw = File.CreateText(filePathBallGame))
             {
                 // You can write content to the file if needed
-                sw.WriteLine("id,name,mode,scoreLeft,scoreRight,time,amount,isLeft,isRight,dist");
+                sw.WriteLine("id,mode,scoreLeft,scoreRight,time,isLeft,isRight,dist,date");
             }
         }
 
@@ -132,7 +132,7 @@ public class Database : MonoBehaviour
             using (StreamWriter sw = File.CreateText(filePathDrawGame))
             {
                 // You can write content to the file if needed
-                sw.WriteLine("id,name,picture,accurate,time,time_out_the_box");
+                sw.WriteLine("id,shape,level,total_time,error_time,hand,date");
             }
         }
     }

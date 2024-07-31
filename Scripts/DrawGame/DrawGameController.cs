@@ -39,6 +39,8 @@ public class DrawGameController : MonoBehaviour
     public DrawObjOnBoard circle;
     public DrawObjOnBoard square;
     public DrawObjOnBoard tri;
+
+    int level;
     void Start()
     {
         PlayerPrefs.SetFloat("nextClick", Time.time);
@@ -89,7 +91,12 @@ public class DrawGameController : MonoBehaviour
         timeOutSideText.GetComponent<TextMeshProUGUI>().text = "Time out side: " + String.Format("{0:0.00}", timeOutTheBox) + " sec";
         selectMenu.SetActive(false);
         finishScene.SetActive(true);
-        logging.SaveToLog(pic, accurate*100, timer, timeOutTheBox);
+        //logging.SaveToLog(pic, accurate*100, timer, timeOutTheBox);
+        char hand = (line.isLeft ? 'L' : 'R');
+        if (!PlayerPrefs.GetString("currentName").Equals("Guess"))
+        {
+            logging.SaveToLog(pic, level, timer, timeOutTheBox, hand);
+        }
 
         UIFinished.SetActive(true);
 
@@ -137,7 +144,7 @@ public class DrawGameController : MonoBehaviour
 
     public void SelectLevel()
     {
-        int level = selectLevel.GetComponent<TMP_Dropdown>().value;
+        level = selectLevel.GetComponent<TMP_Dropdown>().value;
         if(level == 0)
         {
             circle.SetSize(1.75f, 3f);

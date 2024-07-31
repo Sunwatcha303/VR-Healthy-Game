@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class LobbyController : MonoBehaviour
 {
@@ -174,6 +175,17 @@ public class LobbyController : MonoBehaviour
         selectScene.SetActive(true);
         PlayerPrefs.DeleteKey("currentId");
         PlayerPrefs.DeleteKey("currentName");
+        PlayerPrefs.Save();
+    }
+
+    public void ContunueWithGuest()
+    {
+        selectScene.SetActive(false);
+        menuScene.SetActive(true);
+        System.Random rand = new System.Random();
+        int id = rand.Next(100000, 999999);
+        PlayerPrefs.SetString("currentName", "Guest");
+        PlayerPrefs.SetString("currentId", ""+id);
         PlayerPrefs.Save();
     }
 }
