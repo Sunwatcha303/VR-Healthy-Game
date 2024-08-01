@@ -90,8 +90,9 @@ public class Database : MonoBehaviour
             {
                 // You can write content to the file if needed
                 sw.WriteLine("id,name");
-                sw.WriteLine("0001,Jack");
-                sw.WriteLine("0002,John");
+                sw.WriteLine("0000,Guest");
+                sw.WriteLine("0001,John");
+                sw.WriteLine("0002,Jack");
             }
         }
         if (File.Exists(filePathBallGame))
@@ -105,7 +106,7 @@ public class Database : MonoBehaviour
                 {
                     patients[input[0]] = new PatientData(input[0], input[1]);
                 }
-                patients[input[0]].AddBallGameData(input[2], input[3], input[4], input[5], input[6], input[7]);
+                patients[input[0]].AddBallGameData(input[1], input[2], input[3], input[4], input[5], input[6], input[7], input[8]);
             }
         }
         else
@@ -124,7 +125,7 @@ public class Database : MonoBehaviour
             foreach (string line in linesBall)
             {
                 string[] input = line.Split(",");
-                patients[input[0]].AddDrawGameData(input[2], input[3], input[4]);
+                patients[input[0]].AddDrawGameData(input[1], input[2], input[3], input[4], input[5], input[6]);
             }
         }
         else
@@ -226,6 +227,15 @@ public class Database : MonoBehaviour
             {
                 return p.Key;
             }
+        }
+        return null;
+    }
+
+    internal PatientData GetPatientDataById(string id)
+    {
+        if (patients.ContainsKey(id))
+        {
+            return patients[id];
         }
         return null;
     }
