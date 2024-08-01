@@ -88,7 +88,7 @@ public class ScoreBoard : MonoBehaviour
 
         }
     }
-    
+     
     public void ShowTableScoreBoardDrawGame(string id)
     {
         PatientData patientData = database.GetPatientDataById(id);
