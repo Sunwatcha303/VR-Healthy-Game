@@ -28,8 +28,8 @@ public class LobbyController : MonoBehaviour
         btnBallGame.GetComponent<Button>().onClick.AddListener(LoadSceneBallGame);
         btnDrawGame.GetComponent<Button>().onClick.AddListener(LoadSceneDrawGame);
         //loginScene.SetActive(false);
-        //PlayerPrefs.DeleteKey("currentName");
-        //PlayerPrefs.DeleteKey("currentId");
+        PlayerPrefs.DeleteKey("currentName");
+        PlayerPrefs.DeleteKey("currentId");
 
         /*if(PlayerPrefs.GetInt("IsLoggedIn",0) == 0)
         {
@@ -151,21 +151,22 @@ public class LobbyController : MonoBehaviour
     }
     public void SelectPatient()
     {
-        string name = idInput.text;
+        string id = idInput.text;
         //Debug.Log(name);
-        if (!name.Equals(""))
+        if (!id.Equals(""))
         {
-            Debug.Log(database.GetNameByIdOrName(name));
-            if(database.GetNameByIdOrName(name) == null)
+            Debug.Log(database.GetNameById(id));
+            if(database.GetNameById(id) != null)
             {
-                database.AddPatient(name);
+                selectScene.SetActive(false);
+                menuScene.SetActive(true);
+                PlayerPrefs.SetString("currentName", database.GetNameById(id));
+                PlayerPrefs.SetString("currentId", id);
+                PlayerPrefs.Save();
+                idInput.text = "";
+                //database.AddPatient(name);
             }
-            selectScene.SetActive(false);
-            menuScene.SetActive(true);
-            PlayerPrefs.SetString("currentName", name);
-            PlayerPrefs.SetString("currentId", database.GetIdByName(name));
-            PlayerPrefs.Save();
-            idInput.text = "";
+
         }
     }
 
@@ -178,14 +179,14 @@ public class LobbyController : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void ContunueWithGuest()
+    public void ContinueWithGuest()
     {
         selectScene.SetActive(false);
         menuScene.SetActive(true);
-        System.Random rand = new System.Random();
-        int id = rand.Next(100000, 999999);
+        //System.Random rand = new System.Random();
+        //int id = rand.Next(100000, 999999);
         PlayerPrefs.SetString("currentName", "Guest");
-        PlayerPrefs.SetString("currentId", ""+id);
+        PlayerPrefs.SetString("currentId", "0000");
         PlayerPrefs.Save();
     }
 }

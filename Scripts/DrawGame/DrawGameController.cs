@@ -93,10 +93,8 @@ public class DrawGameController : MonoBehaviour
         finishScene.SetActive(true);
         //logging.SaveToLog(pic, accurate*100, timer, timeOutTheBox);
         char hand = (line.isLeft ? 'L' : 'R');
-        if (!PlayerPrefs.GetString("currentName").Equals("Guess"))
-        {
-            logging.SaveToLog(pic, level, timer, timeOutTheBox, hand);
-        }
+
+        logging.SaveToLog(pic, level, timer, timeOutTheBox, hand);
 
         UIFinished.SetActive(true);
 

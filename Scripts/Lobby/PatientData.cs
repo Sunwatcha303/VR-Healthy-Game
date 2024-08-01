@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 public class PatientData
@@ -8,39 +9,119 @@ public class PatientData
     List<DrawGameData> drawGameData;
     public class BallGameData
     {
-        private string score;
+        private string mode;
+        private string rightScore;
+        private string leftScore;
         private string time;
-        private string amount;
         private string isLeft;
         private string isRight;
         private string dist;
+        private string date;
 
-        public BallGameData(string score, string time, string amount, string isLeft, string isRight, string dist)
+        public BallGameData(string mode, string rightScore, string leftScore, string time, string isLeft, string isRight, string dist, string date)
         {
-            this.score = score;
+            this.mode = mode;
+            this.rightScore = rightScore;
+            this.leftScore = leftScore;
             this.time = time;
-            this.amount = amount;
             this.isLeft = isLeft;
             this.isRight = isRight;
             this.dist = dist;
+            this.date = date;
+        }
+
+        internal string getTime()
+        {
+            return time;
+        }
+
+        internal string getDist()
+        {
+            return dist;
+        }
+
+        internal string getLeftHand()
+        {
+            return isLeft;
+        }
+
+        internal string getLeftScore()
+        {
+            return leftScore;
+        }
+
+        internal string getRightHand()
+        {
+            return isRight;
+        }
+
+        internal string getRightScore()
+        {
+            return rightScore;
+        }
+
+        internal string getDate()
+        {
+            return date;
+        }
+
+        internal string getMode()
+        {
+            return mode;
         }
     }
 
     public class DrawGameData
     {
-        private string picture;
-        private string accurate;
-        private string time;
+        private string shape;
+        private string level;
+        private string totalTime;
+        private string errorTime;
+        private string hand;
+        private string date;
 
-        public DrawGameData(string picture, string accurate, string time)
+        public DrawGameData(string shape, string level, string totalTime, string errorTime, string hand, string date)
         {
-            this.picture = picture;
-            this.accurate = accurate;
-            this.time = time;
+            this.shape = shape;
+            this.level = level;
+            this.totalTime = totalTime;
+            this.errorTime = errorTime;
+            this.hand = hand;
+            this.date = date;
+        }
+
+        internal string getDate()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string getErrorTime()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string getLevel()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string getRightScore()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string getShape()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string getTotalTime()
+        {
+            throw new NotImplementedException();
         }
     }
 
-    public PatientData(string id, string name)
+    public PatientData(string id, string name) 
     {
         this.id = id;
         this.name = name;
@@ -48,18 +129,27 @@ public class PatientData
         drawGameData = new List<DrawGameData>();
     }
 
-    public void AddBallGameData(string score, string time, string amount, string isLeft, string isRight, string dist)
+    public void AddBallGameData(string mode, string rightScore, string leftScore, string time, string isLeft, string isRight, string dist, string date)
     {
-        ballGameData.Add(new BallGameData(score, time, amount, isLeft, isRight, dist));
+        ballGameData.Add(new BallGameData( mode, rightScore, leftScore,  time,  isLeft,  isRight, dist, date));
     }
 
-    public void AddDrawGameData(string picture, string accurate, string time)
+    public void AddDrawGameData(string shape, string level, string totaltime, string errorTime, string hand, string date)
     {
-        drawGameData.Add(new DrawGameData(picture, accurate, time));
+        drawGameData.Add(new DrawGameData(shape, level, totaltime, errorTime, hand, date));
     }
 
     public string getName()
     {
         return name;
+    }
+
+    public List<BallGameData> GetBallGameDataList()
+    {
+        return ballGameData;
+    }
+    public List<DrawGameData> GetDrawGameDataList()
+    {
+        return drawGameData;
     }
 }
