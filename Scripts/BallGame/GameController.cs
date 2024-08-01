@@ -111,9 +111,8 @@ public class GameController : MonoBehaviour
             timeText.SetActive(true);
         }
         spawnBall.DestroyBall();
-
         loggin.SaveToLog(
-            (spawnBall.isQSystem)? "random":"set",
+            (spawnBall.isQSystem)? "random": (spawnBall.freeMode ? "free": "set"),
             scoreLeft,
             scoreRight,
             (spawnBall.isQSystem)? time : Mathf.Abs(timer - Time.time),

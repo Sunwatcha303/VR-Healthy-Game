@@ -10,7 +10,7 @@ public class SpawnBall : MonoBehaviour
 
     public bool ready = true;
     public bool isQSystem = false;
-    bool freeMode = false;
+    public bool freeMode = false;
 
     float spawnTime = 0.0f;
     public bool isNear;
