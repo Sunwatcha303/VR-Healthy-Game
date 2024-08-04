@@ -91,8 +91,8 @@ public class Database : MonoBehaviour
                 // You can write content to the file if needed
                 sw.WriteLine("id,name");
                 sw.WriteLine("0000,Guest");
-                sw.WriteLine("0001,John");
-                sw.WriteLine("0002,Jack");
+                sw.WriteLine("0001,Test1");
+                sw.WriteLine("0002,Test2");
             }
         }
         if (File.Exists(filePathBallGame))

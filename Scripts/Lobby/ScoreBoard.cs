@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static PatientData;
 
 public class ScoreBoard : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class ScoreBoard : MonoBehaviour
     public Transform rowScoreBoardDrawGame;
     public int rowHeight = 80;
 
+    public Transform noContentText;
+
     private List<Transform> instantiateList = new List<Transform>();
     
     public void ShowTable()
@@ -35,59 +38,71 @@ public class ScoreBoard : MonoBehaviour
         if(patientData != null )
         {
             List<PatientData.BallGameData> ballGameDatas = patientData.GetBallGameDataList();
-            for(int i=0;i< ballGameDatas.Count; i++)
+            if(ballGameDatas.Count == 0 || patientData.getName().Equals("Guest"))
             {
-                PatientData.BallGameData ballGameData = ballGameDatas[i];
-                if(ballGameData.getMode().Equals("set")) 
-                { 
-                    Transform rowGameObject = Instantiate(rowScoreBoardBallGameModeSet, containerBallGameModeSet);
-                    instantiateList.Add(rowGameObject);
-                    RectTransform rowRectTranform = rowGameObject.GetComponent<RectTransform>();
-                    //rowRectTranform.anchoredPosition = new Vector3(0, -rowHeight * i, 0);
-                    rowGameObject.gameObject.SetActive(true);
-
-                    Debug.Log(rowGameObject.Find("Date"));
-                    rowGameObject.Find("Date").GetComponent<TMP_Text>().text = ballGameData.getDate();
-                    rowGameObject.Find("Range").GetComponent<TMP_Text>().text = ballGameData.getDist();
-                    rowGameObject.Find("LeftHand").GetComponent<TMP_Text>().text = ballGameData.getLeftHand();
-                    rowGameObject.Find("RightHand").GetComponent<TMP_Text>().text = ballGameData.getRightHand();
-                    rowGameObject.Find("LeftScore").GetComponent<TMP_Text>().text = ballGameData.getLeftScore();
-                    rowGameObject.Find("RightScore").GetComponent<TMP_Text>().text = ballGameData.getRightScore();
-                    rowGameObject.Find("Time").GetComponent<TMP_Text>().text = ballGameData.getTime();
-                }
-                else if (ballGameData.getMode().Equals("random"))
+                Transform noContent = Instantiate(noContentText, containerBallGameModeSet);
+                instantiateList.Add(noContent);
+                noContent = Instantiate(noContentText, containerBallGameModeFree);
+                instantiateList.Add(noContent);
+                noContent = Instantiate(noContentText, containerBallGameModeRandom);
+                instantiateList.Add(noContent);
+            }
+            else
+            {
+                for (int i=0;i< ballGameDatas.Count; i++)
                 {
-                    Transform rowGameObject = Instantiate(rowScoreBoardBallGameModeRandom, containerBallGameModeRandom);
-                    instantiateList.Add(rowGameObject);
-                    RectTransform rowRectTranform = rowGameObject.GetComponent<RectTransform>();
-                    //rowRectTranform.anchoredPosition = new Vector3(0, -rowHeight * i, 0);
-                    rowGameObject.gameObject.SetActive(true);
+                    PatientData.BallGameData ballGameData = ballGameDatas[i];
+                    if(ballGameData.getMode().Equals("set")) 
+                    { 
+                        Transform rowGameObject = Instantiate(rowScoreBoardBallGameModeSet, containerBallGameModeSet);
+                        instantiateList.Add(rowGameObject);
+                        RectTransform rowRectTranform = rowGameObject.GetComponent<RectTransform>();
+                        //rowRectTranform.anchoredPosition = new Vector3(0, -rowHeight * i, 0);
+                        rowGameObject.gameObject.SetActive(true);
 
-                    Debug.Log(rowGameObject.Find("Date"));
-                    rowGameObject.Find("Date").GetComponent<TMP_Text>().text = ballGameData.getDate();
-                    rowGameObject.Find("Range").GetComponent<TMP_Text>().text = ballGameData.getDist();
-                    rowGameObject.Find("LeftHand").GetComponent<TMP_Text>().text = ballGameData.getLeftHand();
-                    rowGameObject.Find("RightHand").GetComponent<TMP_Text>().text = ballGameData.getRightHand();
-                    rowGameObject.Find("LeftScore").GetComponent<TMP_Text>().text = ballGameData.getLeftScore();
-                    rowGameObject.Find("RightScore").GetComponent<TMP_Text>().text = ballGameData.getRightScore();
-                    rowGameObject.Find("Time").GetComponent<TMP_Text>().text = ballGameData.getTime();
-                }
-                else
-                {
-                    Transform rowGameObject = Instantiate(rowScoreBoardBallGameModeFree, containerBallGameModeFree);
-                    instantiateList.Add(rowGameObject);
-                    RectTransform rowRectTranform = rowGameObject.GetComponent<RectTransform>();
-                    //rowRectTranform.anchoredPosition = new Vector3(0, -rowHeight * i, 0);
-                    rowGameObject.gameObject.SetActive(true);
+                        Debug.Log(rowGameObject.Find("Date"));
+                        rowGameObject.Find("Date").GetComponent<TMP_Text>().text = ballGameData.getDate();
+                        rowGameObject.Find("Range").GetComponent<TMP_Text>().text = ballGameData.getDist();
+                        rowGameObject.Find("LeftHand").GetComponent<TMP_Text>().text = ballGameData.getLeftHand();
+                        rowGameObject.Find("RightHand").GetComponent<TMP_Text>().text = ballGameData.getRightHand();
+                        rowGameObject.Find("LeftScore").GetComponent<TMP_Text>().text = ballGameData.getLeftScore();
+                        rowGameObject.Find("RightScore").GetComponent<TMP_Text>().text = ballGameData.getRightScore();
+                        rowGameObject.Find("Time").GetComponent<TMP_Text>().text = ballGameData.getTime();
+                    }
+                    else if (ballGameData.getMode().Equals("random"))
+                    {
+                        Transform rowGameObject = Instantiate(rowScoreBoardBallGameModeRandom, containerBallGameModeRandom);
+                        instantiateList.Add(rowGameObject);
+                        RectTransform rowRectTranform = rowGameObject.GetComponent<RectTransform>();
+                        //rowRectTranform.anchoredPosition = new Vector3(0, -rowHeight * i, 0);
+                        rowGameObject.gameObject.SetActive(true);
 
-                    Debug.Log(rowGameObject.Find("Date"));
-                    rowGameObject.Find("Date").GetComponent<TMP_Text>().text = ballGameData.getDate();
-                    rowGameObject.Find("Range").GetComponent<TMP_Text>().text = ballGameData.getDist();
-                    rowGameObject.Find("LeftHand").GetComponent<TMP_Text>().text = ballGameData.getLeftHand();
-                    rowGameObject.Find("RightHand").GetComponent<TMP_Text>().text = ballGameData.getRightHand();
-                    rowGameObject.Find("LeftScore").GetComponent<TMP_Text>().text = ballGameData.getLeftScore();
-                    rowGameObject.Find("RightScore").GetComponent<TMP_Text>().text = ballGameData.getRightScore();
-                    rowGameObject.Find("Time").GetComponent<TMP_Text>().text = ballGameData.getTime();
+                        Debug.Log(rowGameObject.Find("Date"));
+                        rowGameObject.Find("Date").GetComponent<TMP_Text>().text = ballGameData.getDate();
+                        rowGameObject.Find("Range").GetComponent<TMP_Text>().text = ballGameData.getDist();
+                        rowGameObject.Find("LeftHand").GetComponent<TMP_Text>().text = ballGameData.getLeftHand();
+                        rowGameObject.Find("RightHand").GetComponent<TMP_Text>().text = ballGameData.getRightHand();
+                        rowGameObject.Find("LeftScore").GetComponent<TMP_Text>().text = ballGameData.getLeftScore();
+                        rowGameObject.Find("RightScore").GetComponent<TMP_Text>().text = ballGameData.getRightScore();
+                        rowGameObject.Find("Time").GetComponent<TMP_Text>().text = ballGameData.getTime();
+                    }
+                    else
+                    {
+                        Transform rowGameObject = Instantiate(rowScoreBoardBallGameModeFree, containerBallGameModeFree);
+                        instantiateList.Add(rowGameObject);
+                        RectTransform rowRectTranform = rowGameObject.GetComponent<RectTransform>();
+                        //rowRectTranform.anchoredPosition = new Vector3(0, -rowHeight * i, 0);
+                        rowGameObject.gameObject.SetActive(true);
+
+                        Debug.Log(rowGameObject.Find("Date"));
+                        rowGameObject.Find("Date").GetComponent<TMP_Text>().text = ballGameData.getDate();
+                        rowGameObject.Find("Range").GetComponent<TMP_Text>().text = ballGameData.getDist();
+                        rowGameObject.Find("LeftHand").GetComponent<TMP_Text>().text = ballGameData.getLeftHand();
+                        rowGameObject.Find("RightHand").GetComponent<TMP_Text>().text = ballGameData.getRightHand();
+                        rowGameObject.Find("LeftScore").GetComponent<TMP_Text>().text = ballGameData.getLeftScore();
+                        rowGameObject.Find("RightScore").GetComponent<TMP_Text>().text = ballGameData.getRightScore();
+                        rowGameObject.Find("Time").GetComponent<TMP_Text>().text = ballGameData.getTime();
+                    }
                 }
             }
 
@@ -100,26 +115,34 @@ public class ScoreBoard : MonoBehaviour
         if (patientData != null)
         {
             List<PatientData.DrawGameData> drawGameDatas = patientData.GetDrawGameDataList();
-            for (int i = 0; i < drawGameDatas.Count; i++)
+            if (drawGameDatas.Count == 0 || patientData.getName().Equals("Guest"))
             {
-                Transform rowGameObject = Instantiate(rowScoreBoardDrawGame, containerDrawGame);
-                instantiateList.Add(rowGameObject);
-                RectTransform rowRectTranform = rowGameObject.GetComponent<RectTransform>();
-                //rowRectTranform.anchoredPosition = new Vector3(0, -rowHeight * i, 0);
-                rowGameObject.gameObject.SetActive(true);
+                Transform noContent = Instantiate(noContentText, containerDrawGame);
+                instantiateList.Add(noContent);
+            }
+            else
+            {
+                for (int i = 0; i < drawGameDatas.Count; i++)
+                {
+                    Transform rowGameObject = Instantiate(rowScoreBoardDrawGame, containerDrawGame);
+                    instantiateList.Add(rowGameObject);
+                    RectTransform rowRectTranform = rowGameObject.GetComponent<RectTransform>();
+                    //rowRectTranform.anchoredPosition = new Vector3(0, -rowHeight * i, 0);
+                    rowGameObject.gameObject.SetActive(true);
 
-                PatientData.DrawGameData drawGameData = drawGameDatas[i];
-                Debug.Log(rowGameObject.Find("Date"));
-                rowGameObject.Find("Date").GetComponent<TMP_Text>().text = drawGameData.getDate();
-                rowGameObject.Find("Shape").GetComponent<TMP_Text>().text = drawGameData.getShape();
-                rowGameObject.Find("Level").GetComponent<TMP_Text>().text = drawGameData.getLevel();
-                rowGameObject.Find("Hand").GetComponent<TMP_Text>().text = drawGameData.getHand();
-                float totalTime = float.Parse(drawGameData.getTotalTime());
-                float errorTime = float.Parse(drawGameData.getErrorTime());
-                rowGameObject.Find("AccurateTime").GetComponent<TMP_Text>().text = totalTime.ToString();
-                rowGameObject.Find("ErrorTime").GetComponent<TMP_Text>().text = errorTime.ToString();
-                float accurateTime = 100f * (totalTime - errorTime) / totalTime;
-                rowGameObject.Find("AccuratePercent").GetComponent<TMP_Text>().text = accurateTime.ToString("0.00") + "%";
+                    PatientData.DrawGameData drawGameData = drawGameDatas[i];
+                    Debug.Log(rowGameObject.Find("Date"));
+                    rowGameObject.Find("Date").GetComponent<TMP_Text>().text = drawGameData.getDate();
+                    rowGameObject.Find("Shape").GetComponent<TMP_Text>().text = drawGameData.getShape();
+                    rowGameObject.Find("Level").GetComponent<TMP_Text>().text = drawGameData.getLevel();
+                    rowGameObject.Find("Hand").GetComponent<TMP_Text>().text = drawGameData.getHand();
+                    float totalTime = float.Parse(drawGameData.getTotalTime());
+                    float errorTime = float.Parse(drawGameData.getErrorTime());
+                    rowGameObject.Find("AccurateTime").GetComponent<TMP_Text>().text = totalTime.ToString();
+                    rowGameObject.Find("ErrorTime").GetComponent<TMP_Text>().text = errorTime.ToString();
+                    float accurateTime = 100f * (totalTime - errorTime) / totalTime;
+                    rowGameObject.Find("AccuratePercent").GetComponent<TMP_Text>().text = accurateTime.ToString("0.00") + "%";
+                }
             }
 
         }

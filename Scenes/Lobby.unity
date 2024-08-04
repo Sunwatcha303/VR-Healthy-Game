@@ -10044,6 +10044,7 @@ MonoBehaviour:
   containerDrawGame: {fileID: 1708827295}
   rowScoreBoardDrawGame: {fileID: 1191427356657027160, guid: 0a8d88758d2bc8347b86f0af413e45c7, type: 3}
   rowHeight: 80
+  noContentText: {fileID: 7220408169300743010, guid: 26a34816b9fbafa4681492d62fb752ce, type: 3}
 --- !u!224 &1145673932 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 676211143431572181, guid: 424fb4526cbbaf442819a7787d092894, type: 3}
