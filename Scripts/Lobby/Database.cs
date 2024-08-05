@@ -22,15 +22,15 @@ public class Database : MonoBehaviour
     void Start()
     {
         // Combine the persistent data path and the file name
-        //filePathUser = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", csvUserFileName);
-        //filePathPatient = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", csvPatientFileName);
-        //filePathBallGame = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", csvBallGameFileName);
-        //filePathDrawGame = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", csvDrawGameFileName);
+        filePathUser = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", csvUserFileName);
+        filePathPatient = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", csvPatientFileName);
+        filePathBallGame = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", csvBallGameFileName);
+        filePathDrawGame = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", csvDrawGameFileName);
         // for build
-        filePathUser = Path.Combine(Application.dataPath, csvUserFileName);
-        filePathPatient = Path.Combine(Application.dataPath, csvPatientFileName);
-        filePathBallGame = Path.Combine(Application.dataPath, csvBallGameFileName);
-        filePathDrawGame = Path.Combine(Application.dataPath, csvDrawGameFileName);
+        //filePathUser = Path.Combine(Application.dataPath, csvUserFileName);
+        //filePathPatient = Path.Combine(Application.dataPath, csvPatientFileName);
+        //filePathBallGame = Path.Combine(Application.dataPath, csvBallGameFileName);
+        //filePathDrawGame = Path.Combine(Application.dataPath, csvDrawGameFileName);
         user = new Dictionary<string, string>();
         patients = new Dictionary<string, PatientData>();
         ReadCSVFileUser(filePathUser);

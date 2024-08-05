@@ -14,7 +14,7 @@ public class Pointer : MonoBehaviour
     public LineRenderer linePointer = null;
 
     [Tooltip("Visually, how far out should the ray be drawn.")]
-    public float rayDrawDistance = 5f;
+    public float rayDrawDistance = 20f;
 
     void Update()
     {
