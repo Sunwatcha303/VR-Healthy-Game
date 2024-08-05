@@ -73,4 +73,9 @@ public class Pointer : MonoBehaviour
         //Debug.Log(hit.point);
         return false;
     }
+
+    public void SetRayDistance(float f)
+    {
+        rayDrawDistance = f;
+    }
 }

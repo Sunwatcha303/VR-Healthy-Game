@@ -340,5 +340,25 @@ public class SpawnBall : MonoBehaviour
 
         temp.transform.position = new Vector3(boardFreeMode[i].positionX, boardFreeMode[i].positionY, posZ);
     }
+
+    internal void setArmLen(float v)
+    {
+        armLength = v;
+    }
+
+    internal void setNearDist(float v)
+    {
+        nearLength = v;
+    }
+
+    internal void setNormalDist(float v)
+    {
+        normalLength = v;
+    }
+
+    internal void setFarDist(float v)
+    {
+        farLength = v;
+    }
 }
 

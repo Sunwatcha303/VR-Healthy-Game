@@ -23,6 +23,9 @@ public class ScoreBoard : MonoBehaviour
 
     public Transform noContentText;
 
+    public TMP_Text patientLabel;
+    public TMP_Text doctorLabel;
+
     private List<Transform> instantiateList = new List<Transform>();
     
     public void ShowTable()
@@ -30,6 +33,9 @@ public class ScoreBoard : MonoBehaviour
         string id = PlayerPrefs.GetString("currentId");
         ShowTableScoreBoardDrawGame(id);
         ShowTableScoreBoardBallGame(id);
+        
+        patientLabel.text = "Patient: " + database.GetNameById(id);
+        doctorLabel.text = "Doctor: " + PlayerPrefs.GetString("userName");
     }
     
     public void ShowTableScoreBoardBallGame(string id)

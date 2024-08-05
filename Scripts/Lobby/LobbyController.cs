@@ -90,6 +90,7 @@ public class LobbyController : MonoBehaviour
             usernameInputLogin.text = "";
             passwordInputLogin.text = "";
             PlayerPrefs.SetInt("IsLoggedIn", 1);
+            PlayerPrefs.SetString("userName", username);
             PlayerPrefs.Save();
         }
         else
