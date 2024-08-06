@@ -54,7 +54,7 @@ public class SettingDrawGame : MonoBehaviour
             //Debug.Log(input[0] + input[1]);
             settingsDict[input[0]] = float.Parse(input[1]);
         }
-        //Debug.Log(settingsDict.Count);
+        Debug.Log(settingsDict.Count);
 
         SetPage();
     }

@@ -7,4 +7,4 @@ Ball_game_y_position: 1.75
 Draw_game_x_position: 0
 Draw_game_y_position: 5
 Draw_game_z_position: 7
-Ray_draw_distance: 10
+Ray_draw_distance: 15
