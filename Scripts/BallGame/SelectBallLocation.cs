@@ -10,6 +10,8 @@ public class SelectBallLocation : MonoBehaviour
     public bool isSelect = false;
     public float x = 0f;
     public float y = 0f;
+    public Color yellow = new Color32(255, 178, 0, 255);
+    public Color grey = new Color32(255, 255, 255, 255);
     void Start()
     {
         button = GetComponent<Button>();
@@ -27,13 +29,16 @@ public class SelectBallLocation : MonoBehaviour
     public void OnButtonClick(){
         if(!isSelect){
             isSelect = true;
-            buttonText.text = "true";
+            buttonText.text = "On";
+            button.GetComponent<Image>().color = yellow;
         }
         else{
             isSelect = false;
-            buttonText.text = "false";
+            buttonText.text = "Off";
+            button.GetComponent<Image>().color = grey;
         }
     }
+
 
     public float getX(){
         return x;

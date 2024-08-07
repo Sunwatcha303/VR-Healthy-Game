@@ -40,6 +40,13 @@ public class DrawGameController : MonoBehaviour
     public DrawObjOnBoard square;
     public DrawObjOnBoard tri;
 
+    public GameObject circleGameObject;
+    public GameObject squareGameObject;
+    public GameObject triGameObject;
+
+    public Pointer pointerR;
+    public Pointer pointerL;
+
     int level;
     void Start()
     {
@@ -185,5 +192,19 @@ public class DrawGameController : MonoBehaviour
     {
         timeOutTheBox = i;
         SetStartTimeOutTheBox(Time.time);
+    }
+
+    internal void setPosBoard(float x, float y, float z)
+    {
+        circleGameObject.transform.position = new Vector3(x, y, z);
+        squareGameObject.transform.position = new Vector3(x, y - 0.4f, z);
+        triGameObject.transform.position = new Vector3(x, y, z);
+        pointToStartObj.transform.position = new Vector3(x - 2.45f, (y - 0.85f), z - 0.01f);
+    }
+
+    internal void setRayDistance(float rayDist)
+    {
+        pointerL.SetRayDistance(rayDist);
+        pointerR.SetRayDistance(rayDist);
     }
 }

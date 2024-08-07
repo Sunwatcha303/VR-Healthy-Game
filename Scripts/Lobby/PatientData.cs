@@ -42,7 +42,7 @@ public class PatientData
 
         internal string getLeftHand()
         {
-            return isLeft;
+            return isLeft.Equals("True") ? "Yes" : "No";
         }
 
         internal string getLeftScore()
@@ -52,7 +52,7 @@ public class PatientData
 
         internal string getRightHand()
         {
-            return isRight;
+            return isRight.Equals("True") ? "Yes" : "No";
         }
 
         internal string getRightScore()
@@ -92,32 +92,32 @@ public class PatientData
 
         internal string getDate()
         {
-            throw new NotImplementedException();
+            return date;
         }
 
         internal string getErrorTime()
         {
-            throw new NotImplementedException();
+            return errorTime;
         }
 
         internal string getLevel()
         {
-            throw new NotImplementedException();
+            return level.Equals("0") ? "Easy" : (level.Equals("1") ? "Normal" : "Hard");
         }
 
-        internal string getRightScore()
+        internal string getHand()
         {
-            throw new NotImplementedException();
+            return hand.Equals("R") ? "Right" : "Left";
         }
 
         internal string getShape()
         {
-            throw new NotImplementedException();
+            return shape.Equals("0") ? "Circle" : (shape.Equals("1") ? "Square" : "Triangle");
         }
 
         internal string getTotalTime()
         {
-            throw new NotImplementedException();
+            return totalTime;
         }
     }
 

@@ -10,7 +10,7 @@ public class SpawnBall : MonoBehaviour
 
     public bool ready = true;
     public bool isQSystem = false;
-    bool freeMode = false;
+    public bool freeMode = false;
 
     float spawnTime = 0.0f;
     public bool isNear;
@@ -94,8 +94,8 @@ public class SpawnBall : MonoBehaviour
                 {
                     posZ = farLength * armLength;
                 }
-                double posY = random.NextDouble() * (1.75 - 1.25) + 1.25;
-                double posX = random.NextDouble() * (0.75 + 0.75) - 0.75;
+                double posY = (random.NextDouble() / 2f) + 1f;
+                double posX = (random.NextDouble() - 0.5f) * 1.5f;
                 Vector3 spawnPosition = new Vector3((float)posX, (float)posY, posZ);
                 temp.transform.position = spawnPosition;
             }
@@ -339,6 +339,26 @@ public class SpawnBall : MonoBehaviour
         Debug.Log(posZ);
 
         temp.transform.position = new Vector3(boardFreeMode[i].positionX, boardFreeMode[i].positionY, posZ);
+    }
+
+    internal void setArmLen(float v)
+    {
+        armLength = v;
+    }
+
+    internal void setNearDist(float v)
+    {
+        nearLength = v;
+    }
+
+    internal void setNormalDist(float v)
+    {
+        normalLength = v;
+    }
+
+    internal void setFarDist(float v)
+    {
+        farLength = v;
     }
 }
 
