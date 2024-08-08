@@ -47,12 +47,125 @@ public class DrawGameController : MonoBehaviour
     public Pointer pointerR;
     public Pointer pointerL;
 
+    public GameObject easyLevelButton;
+    public GameObject normalLevelButton;
+    public GameObject hardLevelButton;
+
+    public GameObject leftHandButton;
+    public GameObject rightHandButton;
+
     int level;
     void Start()
     {
         PlayerPrefs.SetFloat("nextClick", Time.time);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        easyLevelButton.GetComponent<Button>().onClick.AddListener(onClickEasyLevelButton);
+        normalLevelButton.GetComponent<Button>().onClick.AddListener(onClickNormalLevelButton);
+        hardLevelButton.GetComponent<Button>().onClick.AddListener(onClickHardLevelButton);
+
+        leftHandButton.GetComponent<Button>().onClick.AddListener(onClickLeftHandButton);
+        rightHandButton.GetComponent<Button>().onClick.AddListener(onClickRightHandButton);
+    }
+
+    private void onClickRightHandButton()
+    {
+        if (line.GetIsRight() && !line.GetIsLeft())
+        {
+            line.SetIsRight(false);
+            line.SetIsLeft(true);
+            rightHandButton.GetComponent<Image>().color = Color.gray;
+            leftHandButton.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            line.SetIsRight(true);
+            line.SetIsLeft(false);
+            rightHandButton.GetComponent<Image>().color = Color.white;
+            leftHandButton.GetComponent<Image>().color = Color.gray;
+        }
+        line.SetHand();
+    }
+
+    private void onClickLeftHandButton()
+    {
+        if (line.GetIsLeft() && !line.GetIsRight())
+        {
+            line.SetIsLeft(false);
+            line.SetIsRight(true);
+
+            leftHandButton.GetComponent<Image>().color = Color.gray;
+            rightHandButton.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            line.SetIsLeft(true);
+            line.SetIsRight(false);
+            leftHandButton.GetComponent<Image>().color = Color.white;
+            rightHandButton.GetComponent<Image>().color = Color.gray;
+        }
+        line.SetHand();
+    }
+
+    private void onClickHardLevelButton()
+    {
+        level = 2;
+        circle.SetSize(2.25f, 3f);
+        square.SetSize(2.75f, 4f);
+        tri.SetSize(2.75f, 4f);
+        line.SetWidthLine(0.25f);
+        lineline.SetWidthLine(0.25f);
+
+        easyLevelButton.GetComponent<Image>().color = Color.gray;
+        normalLevelButton.GetComponent<Image>().color = Color.gray;
+        hardLevelButton.GetComponent<Image>().color = Color.white;
+
+        resetLevel();
+
+    }
+
+    private void onClickNormalLevelButton()
+    {
+        level = 1;
+        circle.SetSize(2f, 3f);
+        square.SetSize(2.5f, 4f);
+        tri.SetSize(2.5f, 4f);
+        line.SetWidthLine(0.5f);
+        lineline.SetWidthLine(0.5f);
+
+        easyLevelButton.GetComponent<Image>().color = Color.gray;
+        normalLevelButton.GetComponent<Image>().color = Color.white;
+        hardLevelButton.GetComponent<Image>().color = Color.gray;
+
+        resetLevel();
+
+    }
+
+    private void onClickEasyLevelButton()
+    {
+        level = 0;
+        circle.SetSize(1.75f, 3f);
+        square.SetSize(2f, 4f);
+        tri.SetSize(2f, 4f);
+        line.SetWidthLine(0.75f);
+        lineline.SetWidthLine(0.75f);
+
+        easyLevelButton.GetComponent<Image>().color = Color.white;
+        normalLevelButton.GetComponent<Image>().color = Color.gray;
+        hardLevelButton.GetComponent<Image>().color = Color.gray;
+
+        resetLevel();
+    }
+
+    private void resetLevel()
+    {
+        line.lineRenderer.positionCount = 0;
+        lineline.lineRenderer.positionCount = 0;
+
+        isStart = false;
+
+        pointToStartObj.SetActive(true);
     }
 
     // Update is called once per frame

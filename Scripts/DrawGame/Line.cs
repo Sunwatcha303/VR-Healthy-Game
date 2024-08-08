@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using OVRSimpleJSON;
@@ -198,4 +199,25 @@ public class Line : MonoBehaviour
         isOutSide = b;
     }
 
+    internal bool GetIsRight()
+    {
+        return isRight;
+    }
+
+    internal bool GetIsLeft()
+    {
+        return isLeft;
+    }
+
+    internal void SetIsRight(bool v)
+    {
+        isRight = v;
+        rightHand.SetActive(v);
+    }
+
+    internal void SetIsLeft(bool v)
+    {
+        isLeft = v;
+        leftHand.SetActive(v);
+    }
 }

@@ -1,46 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject mainMenu;
-    public GameObject setModeMenu;
-    public GameObject mainCamera;
-    public GameObject freeMode;
-    public GameController controller;
+    public GameObject selectModeMenu;
+    public GameObject pauseButton;
+    public GameController gameController;
     public SpawnBall spawnBall;
-    public SelectDistance selectDistanceSETmode;
     void Start()
     {
-
+        pauseButton.GetComponent<Button>().onClick.AddListener(resetMenu);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (controller.getStart() && Input.GetKeyDown(KeyCode.P))
-        {
-            // Debug.Log("test");
-            resetMenu();
-        }
+
     }
 
     public void resetMenu()
     {
         spawnBall.DestroyBall();
-        spawnBall.SetFreeMode(false);
-        spawnBall.setQSystem(false);
-        spawnBall.setPosZ("near");
 
-        selectDistanceSETmode.SetDropdownToDefault();
+        gameController.setFinish();
+        selectModeMenu.SetActive(true);
 
-
-        controller.setFinish();
-        mainMenu.SetActive(true);
-        setModeMenu.SetActive(true);
-        freeMode.SetActive(false);
-        //mainCamera.SetActive(false);
+        if (!spawnBall.GetIsFreeMode())
+        {
+            gameController.SetActiveSetAndRandMode(true);
+        }
+        else
+        {
+            gameController.SetActiveSetAndRandMode(false);
+        }
     }
 }

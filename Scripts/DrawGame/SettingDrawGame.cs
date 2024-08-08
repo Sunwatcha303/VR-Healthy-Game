@@ -20,13 +20,13 @@ public class SettingDrawGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        filePath = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", "Setting.txt");
+        //filePath = Path.Combine(Application.dataPath, "VR-Healthy-Game", "Database", "Setting.txt");
         // for build
-        // filePath = Path.Combine(Application.dataPath, "Setting.txt");
-        LoadSetting(filePath);
+        filePath = Path.Combine(Application.dataPath, "Setting.txt");
+        LoadSetting();
     }
 
-    public void LoadSetting(string filePath)
+    public void LoadSetting()
     {
         if (!File.Exists(filePath))
         {

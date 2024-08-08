@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class SpawnBall : MonoBehaviour
 {
@@ -11,9 +12,10 @@ public class SpawnBall : MonoBehaviour
     public bool ready = true;
     public bool isQSystem = false;
     public bool freeMode = false;
+    public bool isSetMode = true;
 
     float spawnTime = 0.0f;
-    public bool isNear;
+    public bool isNear = true;
     public bool isNormal;
     public bool isFar;
     float posZ = 0;
@@ -25,8 +27,8 @@ public class SpawnBall : MonoBehaviour
     System.Random random = new System.Random();
     int count = 0;
 
-    bool isLeftHand = false;
-    bool isRightHand = false;
+    bool isLeftHand = true;
+    bool isRightHand = true;
     bool isOneHand = false;
     public GameController gameController;
 
@@ -38,11 +40,14 @@ public class SpawnBall : MonoBehaviour
     //near 0.4
     //normal 0.565
     //0.726
+
+    public GameObject timeFieldInput;
     // Update is called once per frame
     void Start()
     {
         isLeftHand = true;
         isRightHand = true;
+        isNear = true;
     }
     void Update()
     {
@@ -98,55 +103,6 @@ public class SpawnBall : MonoBehaviour
                 double posX = (random.NextDouble() - 0.5f) * 1.5f;
                 Vector3 spawnPosition = new Vector3((float)posX, (float)posY, posZ);
                 temp.transform.position = spawnPosition;
-            }
-            else
-            {
-                foreach (SelectBallLocation selection in q)
-                {
-                    GameObject temp;
-                    if (isOneHand)
-                    {
-                        if (isLeftHand)
-                        {
-                            temp = (GameObject)Instantiate(BallForLeft);
-                            listBallInstance.Add(temp);
-                        }
-                        else
-                        {
-                            temp = (GameObject)Instantiate(BallForRight);
-                            listBallInstance.Add(temp);
-                        }
-                    }
-                    else
-                    {
-                        if (random.Next(0, 2) == 1)
-                        {
-                            temp = (GameObject)Instantiate(BallForLeft);
-                            listBallInstance.Add(temp);
-                        }
-                        else
-                        {
-                            temp = (GameObject)Instantiate(BallForRight);
-                            listBallInstance.Add(temp);
-                        }
-                    }
-                    if (isNear)
-                    {
-                        posZ = nearLength * armLength;
-                    }
-                    else if (isNormal)
-                    {
-                        posZ = normalLength * armLength;
-                    }
-                    else
-                    {
-                        posZ = farLength * armLength;
-                    }
-                    Debug.Log(posZ +" "+ isFar + isNormal + isNear);
-                    Vector3 spawnPosition = new Vector3(selection.getX(), selection.getY(), posZ);
-                    temp.transform.position = spawnPosition;
-                }
-                q.Clear();
             }
             ready = false;
         }
@@ -288,10 +244,6 @@ public class SpawnBall : MonoBehaviour
     public void SetFreeMode(bool b)
     {
         freeMode = b;
-        if (freeMode)
-        {
-            isQSystem = false;
-        }
     }
 
     public void SpawballFreeMode(int i)
@@ -336,9 +288,63 @@ public class SpawnBall : MonoBehaviour
             posZ = farLength * armLength;
         }
 
+        Debug.Log(nearLength + " " + normalLength + " " + farLength + " " + armLength);
         Debug.Log(posZ);
 
+
         temp.transform.position = new Vector3(boardFreeMode[i].positionX, boardFreeMode[i].positionY, posZ);
+    }
+
+    public void SpawBallSetMode()
+    {
+        setQueueBall();
+        foreach (SelectBallLocation selection in q)
+        {
+            GameObject temp;
+            if (isOneHand)
+            {
+                if (isLeftHand)
+                {
+                    temp = (GameObject)Instantiate(BallForLeft);
+                    listBallInstance.Add(temp);
+                }
+                else
+                {
+                    temp = (GameObject)Instantiate(BallForRight);
+                    listBallInstance.Add(temp);
+                }
+            }
+            else
+            {
+                if (random.Next(0, 2) == 1)
+                {
+                    temp = (GameObject)Instantiate(BallForLeft);
+                    listBallInstance.Add(temp);
+                }
+                else
+                {
+                    temp = (GameObject)Instantiate(BallForRight);
+                    listBallInstance.Add(temp);
+                }
+            }
+            if (isNear)
+            {
+                posZ = nearLength * armLength;
+            }
+            else if (isNormal)
+            {
+                posZ = normalLength * armLength;
+            }
+            else
+            {
+                posZ = farLength * armLength;
+            }
+            Debug.Log(posZ + " " + isFar + isNormal + isNear);
+            Vector3 spawnPosition = new Vector3(selection.getX(), selection.getY(), posZ);
+            temp.transform.position = spawnPosition;
+        }
+        q.Clear();
+        ready = false;
     }
 
     internal void setArmLen(float v)
@@ -359,6 +365,78 @@ public class SpawnBall : MonoBehaviour
     internal void setFarDist(float v)
     {
         farLength = v;
+    }
+
+    public void SetIsLeftHandOnChange()
+    {
+        isLeftHand = !isLeftHand;
+
+    }
+    public void SetIsRightHandOnChange()
+    {
+        isRightHand = !isRightHand;
+    }
+
+    public void SetIsNear()
+    {
+        isNear = true;
+        isNormal = false;
+        isFar = false;
+    }
+    public void SetIsNormal()
+    {
+        isNear = false;
+        isNormal = true;
+        isFar = false;
+    }
+    public void SetIsFar()
+    {
+        isNear = false;
+        isNormal = false;
+        isFar = true;
+    }
+
+    public bool GetIsRightHand()
+    {
+        return isRightHand;
+    }
+    public bool GetIsLeftHand()
+    {
+        return isLeftHand;
+    }
+
+    public void SetStartToSpawnBall()
+    {
+        if (isSetMode)
+        {
+            SpawBallSetMode();
+        }
+        else if (freeMode)
+        {
+            gameController.SetActiveBoardFreeMode(true);
+        }
+        else if (isQSystem)
+        {
+            string input = timeFieldInput.GetComponent<TMP_InputField>().text;
+            int t = (input == "") ? 0 : int.Parse(input);
+            gameController.setTimerForRand(t);
+        }
+        setReady();
+    }
+
+    public void SetIsSetMode(bool b)
+    {
+        isSetMode = b;
+    }
+
+    internal void SetRandMode(bool b)
+    {
+        isQSystem = b;
+    }
+
+    internal bool GetIsFreeMode()
+    {
+        return freeMode;
     }
 }
 
